@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://black_square.png" type="Texture" id=1]
+[ext_resource path="res://fraction.gd" type="Script" id=2]
+[ext_resource path="res://render_token_no_fraction.gd" type="Script" id=3]
+
+[node name="fraction" type="Node2D"]
+position = Vector2( 191, 198 )
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -2 )
+
+[node name="numerator" type="Node2D" parent="."]
+position = Vector2( 0, -32 )
+script = ExtResource( 3 )
+
+[node name="denumerator" type="Node2D" parent="."]
+position = Vector2( 0, 40 )
+script = ExtResource( 3 )

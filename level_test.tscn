@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://derivatives/derivative_polynomial_question.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Minecraft.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://derivatives/uv_division_derivative_question.tscn" type="PackedScene" id=3]
+[ext_resource path="res://derivatives/uv_multiplication_derivative_question.tscn" type="PackedScene" id=4]
+[ext_resource path="res://derivatives/derivative_trigonometry_question.tscn" type="PackedScene" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 2 )
+
+[node name="level_test" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+margin_left = 23.0
+margin_top = 24.0
+margin_right = 705.0
+margin_bottom = 56.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Find the derivatives of each equation below!"
+
+[node name="derivative_polynomial_question" parent="." instance=ExtResource( 1 )]
+position = Vector2( 102, 141 )
+scale = Vector2( 0.5, 0.5 )
+question_number = 1
+
+[node name="uv_division_derivative_question" parent="." instance=ExtResource( 3 )]
+position = Vector2( 102, 233 )
+scale = Vector2( 0.5, 0.5 )
+question_number = 2
+
+[node name="uv_multiplication_derivative_question" parent="." instance=ExtResource( 4 )]
+position = Vector2( 100, 347 )
+scale = Vector2( 0.5, 0.5 )
+question_number = 3
+
+[node name="derivative_trigonometry_question" parent="." instance=ExtResource( 5 )]
+position = Vector2( 100, 443 )
+scale = Vector2( 0.5, 0.5 )
+question_number = 4

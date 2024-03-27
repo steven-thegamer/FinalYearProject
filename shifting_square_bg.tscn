@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec2 resolution = vec2(600.0, 400.0);
+uniform vec3 line_color = vec3(0.2, 0.3, 0.5);
+uniform vec3 background_color = vec3(0.0, 0.0, 0.0); // Added uniform for background color
+uniform float thickness: hint_range(0.1, 10.0, 0.1) = 2.0;
+uniform float brightness: hint_range(0.1, 4.0, 0.1) = 2.0;
+
+float draw_grid(vec2 uv) {
+    vec2 grid_uv = cos(uv * 2.0 * 3.14159265358979323846264338328);
+    return max(grid_uv.x, grid_uv.y);
+}
+
+void fragment() {
+    vec2 uv = UV - 0.5;
+    uv.x *= resolution.x / resolution.y;
+
+    // Add diagonal movement
+    uv += vec2(0.16 * TIME,0.09 * TIME);
+
+    float zoom = abs(sin(0.5)) * 40.0;
+    float line_thickness = zoom * thickness / resolution.y;
+    vec3 color = smoothstep(0.6 - line_thickness, 1.0, draw_grid(uv * zoom)) * line_color;
+
+    // Set background color
+    vec3 background = background_color * (1.0 - smoothstep(0.6 - line_thickness, 1.0, draw_grid(uv * zoom)));
+    color += background;
+
+    COLOR = vec4(color * brightness, 0.8);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/resolution = Vector2( 1024, 600 )
+shader_param/line_color = Vector3( 0.2, 0.2, 1 )
+shader_param/background_color = Vector3( 1, 1, 1 )
+shader_param/thickness = 1.0
+shader_param/brightness = 4.0
+
+[node name="BG" type="ColorRect"]
+material = SubResource( 2 )
+margin_right = 1023.0
+margin_bottom = 616.0
+mouse_filter = 2
