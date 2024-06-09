@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://paper_full.png" type="Texture" id=1]
+[ext_resource path="res://paper_bg.gd" type="Script" id=2]
+
+[node name="paper_bg" type="Node2D"]
+z_index = -10
+script = ExtResource( 2 )
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 648.0
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 128, 128 )
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2

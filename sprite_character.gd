@@ -9,7 +9,9 @@ preload("res://characters/four.png"),preload("res://characters/five.png")
 preload("res://characters/equal.png"),preload("res://characters/left_bracket.png"),
 preload("res://characters/right_bracket.png"), preload("res://characters/c.png"),
 preload("res://characters/sin.png"),preload("res://characters/cos.png"),preload("res://characters/tan.png"),
-preload("res://characters/cot.png"),preload("res://characters/csc.png"), preload("res://characters/sec.png")]
+preload("res://characters/cot.png"),preload("res://characters/csc.png"), preload("res://characters/sec.png"),
+preload("res://characters/ln.png"),preload("res://characters/e.png")]
+
 var character := ""
 
 func _ready():
@@ -37,3 +39,5 @@ func _ready():
 		"cot":texture = sprites[20]
 		"csc":texture = sprites[21]
 		"sec":texture = sprites[22]
+		"ln":texture = sprites[23]
+		"e":texture = sprites[24]

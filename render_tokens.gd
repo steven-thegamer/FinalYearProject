@@ -1,10 +1,6 @@
 extends Node2D
 
-const exponent_position_y := -24
-const starting_position_y := 0
 const gap_increment := 44
-
-const fraction_object := preload("res://fraction.tscn")
 
 var starting_position_x := 16
 
@@ -14,47 +10,33 @@ const token_patterns = [
 			['[-\\+\\/]|(\\*){1,2}', 'OPERATOR'],            # Match operators [+, -, *, /]
 			['[()]', 'PARENTHESIS'],           # Match parentheses
 			['sin|cos|tan|csc|sec|cot', 'TRIG_FUNCTION'],                # Match trigonometric functions
+			['log|e','LOG_FUNCTION']
 		]
 
 const character_sprite_preload := preload("res://characters.tscn")
+const fraction_object := preload("res://fraction.tscn")
 
-signal token_rendered
-signal question_render_done
-signal equal_render_done
-signal answer_render_done
-
-func render_equal():
-	create_character_sprite("=",Vector2(starting_position_x,starting_position_y))
-	starting_position_x += gap_increment
-	emit_signal("equal_render_done")
-
-func render_answer(answer_tokens : Array):
-	yield(render_tokens(answer_tokens),"token_rendered")
-	emit_signal("answer_render_done")
-
-func render_question(question_tokens : Array):
-	yield(render_tokens(question_tokens),"token_rendered")
-	emit_signal("question_render_done")
-
-func render_all(equation : String, answer : String):
+func render_all(equation : String):
 	var equation_token = tokenize(equation)
-	var answer_token = tokenize(answer)
 	var better_equation_token = parse_tokens(equation_token)
-	var better_answer_token = parse_tokens(answer_token)
-	yield(render_question(better_equation_token),"question_render_done")
-	
+	yield(render_tokens(better_equation_token,16,0),"completed")
+#	display_all_token()
 
-func create_character_sprite(character : String, char_position : Vector2):
+func create_character_sprite(character : String, char_position : Vector2, char_index : int):
+	yield(get_tree(), "idle_frame")
 	var obj = character_sprite_preload.instance()
+	obj.original_question_parent = owner
 	obj.characters = character
 	obj.position = char_position
+	obj.char_pos_in_string = char_index
 	call_deferred("add_child",obj)
+#	obj.hide()
 	yield(obj,"ready")
 
 func tokenize(expression : String):
 	var regex = RegEx.new()
 	var result = []
-	regex.compile('(\\d+(\\.\\d+)?)|x|([-\\+\\/]|(\\*){1,2})|([()])|sin|cos|tan|csc|sec|cot')
+	regex.compile('(\\d+(\\.\\d+)?)|x|([-\\+\\/]|(\\*){1,2})|([()])|sin|cos|tan|csc|sec|cot|log|exp')
 	var arr_found = regex.search_all(expression)
 	for discover in arr_found:
 		result.append(discover.get_string())
@@ -67,6 +49,8 @@ func parse_tokens(tokens : Array):
 	while index < len(tokens):
 		if tokens[index] == "/":
 			var frac = []
+			# WHAT'S INSIDE THE FRAC? AN ARRAY OF THREE ELEMENTS
+			# [NUM_INDEX, DENUM_INDEX, FRACTION]
 			var numerator = ""
 			var denominator = ""
 			# STOP CHECKING IF () HITS OR AN OPERATOR +-
@@ -95,7 +79,7 @@ func parse_tokens(tokens : Array):
 					parenthesis -= 1
 				if (tokens[i] == "+" or tokens[i] == "-") and parenthesis == 0:
 					index = i-1
-					frac.append(index-1)
+					frac.append(i-1)
 					break
 				elif i == len(tokens) - 1:
 					denominator += tokens[i]
@@ -106,6 +90,11 @@ func parse_tokens(tokens : Array):
 			var new_token = numerator + "/" + denominator
 			frac.append(new_token)
 			fraction_indicator.append(frac)
+		elif tokens[index] == "exp":
+			tokens[index] = "e"
+			tokens.insert(index+1,"**")
+		elif tokens[index] == "log":
+			tokens[index] = "ln"
 		index += 1
 	var index_2 = 0
 	while index_2 < len(tokens):
@@ -118,54 +107,88 @@ func parse_tokens(tokens : Array):
 		index_2 += 1
 	return new_token_arr
 
-func render_tokens(tokens : Array):
+func render_tokens(tokens : Array, render_position_x : int, render_position_y : int):
+	yield(get_tree(), "idle_frame")
 	var index = 0
+	var char_index = 0
 	var token_size = tokens.size()
+	var starting_position_x = render_position_x
+	var starting_position_y = render_position_y
+	var exponent_position_y = render_position_y - 24
 	while index < token_size:
 		var token : String = tokens[index]
 		if token == "**":
+			if index > 1 and tokens[index - 1] != "e":
+				char_index += 2
 			index += 1
-			token = tokens[index]
-			create_character_sprite(token,Vector2(starting_position_x,exponent_position_y))
-			starting_position_x += gap_increment
-		elif token == "sin" or token == "cos" or token == "tan" or token == "csc" or token == "sec" or token == "cot":
-			create_character_sprite(token,Vector2(starting_position_x,starting_position_y))
-			starting_position_x += 80
+			var parenthesis = 0
+			while index < token_size:
+				if tokens[index] == "(":
+					yield(create_character_sprite("(",Vector2(starting_position_x,exponent_position_y),char_index),"completed")
+					starting_position_x += gap_increment
+					parenthesis += 1
+					char_index += 1
+				elif tokens[index] == ")":
+					yield(create_character_sprite(")",Vector2(starting_position_x,exponent_position_y),char_index),"completed")
+					starting_position_x += gap_increment
+					parenthesis -= 1
+					char_index += 1
+				else:
+					var power_token = tokens[index]
+					if (tokens[index] == "+" or tokens[index] == "-") and parenthesis == 0:
+						index -= 1
+						break
+					else:
+						if power_token == "sin" or power_token == "cos" or power_token == "tan" or power_token == "csc" or power_token == "sec" or power_token == "cot":
+							yield(create_character_sprite(power_token,Vector2(starting_position_x,exponent_position_y),char_index),"completed")
+							starting_position_x += 80
+							char_index += 3
+						elif power_token != "*":
+							yield(create_character_sprite(power_token,Vector2(starting_position_x,exponent_position_y),char_index),"completed")
+							starting_position_x += gap_increment*len(power_token)
+							char_index += len(power_token)
+							if parenthesis == 0:
+								break
+						elif power_token == "*":
+							char_index += 1
+				index += 1
 		elif "/" in token:
-			prepare_for_fraction(token)
+			var fraction_splitter = token.split("/")
+			var numerator = fraction_splitter[0]
+			var denumerator = fraction_splitter[1]
+			var ori_x = starting_position_x
+			var obj = fraction_object.instance()
+			obj.numerator = numerator
+			obj.denumerator = denumerator
+			obj.position = Vector2(starting_position_x,starting_position_y)
+			call_deferred("add_child",obj)
+			yield(obj,"ready")
+			starting_position_x += obj.longest_length + gap_increment
+		elif token == "sin" or token == "cos" or token == "tan" or token == "csc" or token == "sec" or token == "cot":
+			starting_position_x += 8
+			yield(create_character_sprite(token,Vector2(starting_position_x,starting_position_y),char_index),"completed")
+			starting_position_x += 96
+			char_index += 3
+		elif token == "ln":
+			yield(create_character_sprite("ln",Vector2(starting_position_x,starting_position_y),char_index),"completed")
+			starting_position_x += 80
+			char_index += 3
+		elif token == "e":
+			yield(create_character_sprite("e",Vector2(starting_position_x,starting_position_y),char_index),"completed")
+			starting_position_x += 40
+			char_index += 3
 		elif token != "*":
-			create_character_sprite(token,Vector2(starting_position_x,starting_position_y))
+			yield(create_character_sprite(token,Vector2(starting_position_x,starting_position_y),char_index),"completed")
 			starting_position_x += gap_increment*len(token)
+			char_index += len(token)
+		elif token == "*":
+			char_index += 1
 		index += 1
-	emit_signal("token_rendered")
-	
-func prepare_for_fraction(token : String):
-	var fraction_splitter = token.split("/")
-	var numerator = fraction_splitter[0]
-	var denumerator = fraction_splitter[1]
-	var ori_x = starting_position_x
-	var obj = fraction_object.instance()
-	obj.numerator = numerator
-	obj.denumerator = denumerator
-	obj.position = Vector2(starting_position_x,starting_position_y)
-	call_deferred("add_child",obj)
-	yield(obj,"ready")
-	starting_position_x += obj.longest_length + gap_increment
 
-func change_to_wrong(tokens : Array):
-	var new_tokens = tokens
-	var modified_tokens = {}
-	for i in range(tokens.size()):
-		var token = tokens[i]
-		if token != "**" and token != "*" and token != "x":
-			modified_tokens[i] = tokens[i]
-	var dict_size = modified_tokens.size()
-	var dict_key = modified_tokens.keys()[randi() % dict_size]
-	var dict_value = modified_tokens[dict_key]
-	if dict_value == "+":
-		new_tokens[dict_key] = "-"
-	elif dict_value == "-":
-		new_tokens[dict_key] = "+"
-	else:
-		new_tokens[dict_key] = randi() % 9 + 1
-	return new_tokens
+func display_all_token():
+	for child in get_children():
+		child.show()
+
+func delete_all_token():
+	for child in get_children():
+		child.queue_free()
