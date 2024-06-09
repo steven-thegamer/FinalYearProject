@@ -2,7 +2,7 @@
 
 [ext_resource path="res://black_square.png" type="Texture" id=1]
 [ext_resource path="res://fraction.gd" type="Script" id=2]
-[ext_resource path="res://render_token_no_fraction.gd" type="Script" id=3]
+[ext_resource path="res://render_tokens_for_fraction.gd" type="Script" id=3]
 
 [node name="fraction" type="Node2D"]
 position = Vector2( 191, 198 )
