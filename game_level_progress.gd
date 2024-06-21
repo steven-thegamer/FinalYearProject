@@ -17,5 +17,3 @@ var current_level := ""
 var money := 0
 
 var paper_background : Color = Color.white
-
-

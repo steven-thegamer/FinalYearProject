@@ -3,6 +3,7 @@ extends Node2D
 var original_equation_string := ""
 var equation_string := ""
 var target_string := ""
+var other_possible_targets := []
 
 func revert_to_original():
 	equation_string = original_equation_string
@@ -46,24 +47,19 @@ func multiply_number_equation_string(value : String , position_multiply : int, m
 	var size = value.length()
 	var back = equation_string.left(position_multiply)
 	var front = equation_string.right(position_multiply + size)
-	equation_string = back + value + "*" + multiply_value + front
+	var new_value = str(int(value) * int(multiply_value))
+	equation_string = back + new_value + front
 	get_node("render_token").delete_all_token()
 	equation_string = get_node("equation").sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
 func subtract_number_equation_string(value : String , position_subtract : int):
 	equation_string = equation_string.replace(" ","")
-	var ori_char = value
-	value = value + "-1"
-	var expression = Expression.new()
-	expression.parse(value)
-	value = str(expression.execute())
-	if expression.has_execute_failed():
-		value = ori_char
-	var size = ori_char.length()
+	var size = value.length()
 	var back = equation_string.left(position_subtract)
 	var front = equation_string.right(position_subtract + size)
-	equation_string = back + value + front
+	var new_value = str(int(value) - 1)
+	equation_string = back + new_value + front
 	get_node("render_token").delete_all_token()
 	equation_string = get_node("equation").sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
@@ -152,7 +148,7 @@ func update_equation_string_on_x_multiply(x_position : int, value : String):
 		equation_string = get_node("equation").sympify_equation(equation_string)
 		get_node("render_token").render_all(equation_string)
 	else:
-		var back = equation_string.left(x_position-1)
+		var back = equation_string.left(x_position)
 		var front = equation_string.right(x_position + 1)
 		equation_string = back + value + "*x" + front
 		get_node("render_token").delete_all_token()
@@ -183,11 +179,8 @@ func convert_ln_to_fraction(log_pos : int):
 func equation_string_switch_operator(character: String, operator_pos : int, another_character : String):
 	equation_string = equation_string.replace(" ","")
 	var back = equation_string.left(operator_pos)
-	var front = equation_string.right(operator_pos + 1)
-	if character == another_character:
-		equation_string = back + "+" + front
-	else:
-		equation_string = back + "-" + front
+	var front = equation_string.right(operator_pos)
+	equation_string = back + another_character + front
 	print(equation_string)
 	get_node("render_token").delete_all_token()
 	equation_string = get_node("equation").sympify_equation(equation_string)
@@ -195,15 +188,21 @@ func equation_string_switch_operator(character: String, operator_pos : int, anot
 
 func multiply_value_with_equation(equation: String, value_pos : int, character_hovered_at : String):
 	equation_string = equation_string.replace(" ","")
-	var back = equation_string.left(value_pos)
-	var front = equation_string.right(value_pos)
-	equation_string = back + "(" + equation + ")*" + front
+	if character_hovered_at == ")":
+		var back = equation_string.left(value_pos+1)
+		var front = equation_string.right(value_pos+1)
+		equation_string = back + "*(" + equation + ")" + front
+	else:
+		var back = equation_string.left(value_pos)
+		var front = equation_string.right(value_pos)
+		equation_string = back + "(" + equation + ")*" + front
 	get_node("render_token").delete_all_token()
 	equation_string = get_node("equation").sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
+	GrabSprite.emit_signal("equation_u_sub")
 
 func evaluate_answer():
-	return equation_string == target_string
+	return equation_string == target_string or other_possible_targets.has(equation_string)
 
 func generate_new_equation():
 	get_node("render_token").delete_all_token()
@@ -212,3 +211,10 @@ func generate_new_equation():
 func make_all_equation_shake():
 	for child in get_node("render_token").get_children():
 		child.shake_anim()
+
+func add_value_at_end(value : String):
+	equation_string = equation_string.replace(" ","")
+	equation_string = equation_string + "+" + value
+	get_node("render_token").delete_all_token()
+	equation_string = get_node("equation").sympify_equation(equation_string)
+	get_node("render_token").render_all(equation_string)

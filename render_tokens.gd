@@ -15,12 +15,14 @@ const token_patterns = [
 
 const character_sprite_preload := preload("res://characters.tscn")
 const fraction_object := preload("res://fraction.tscn")
+const addition_object := preload("res://addition_to_equation.tscn")
 
 func render_all(equation : String):
 	var equation_token = tokenize(equation)
 	var better_equation_token = parse_tokens(equation_token)
 	yield(render_tokens(better_equation_token,16,0),"completed")
 #	display_all_token()
+	shrink_scale()
 
 func create_character_sprite(character : String, char_position : Vector2, char_index : int):
 	yield(get_tree(), "idle_frame")
@@ -184,6 +186,10 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 		elif token == "*":
 			char_index += 1
 		index += 1
+	var obj = addition_object.instance()
+	obj.position = Vector2(starting_position_x + gap_increment * 1.5 ,starting_position_y)
+	call_deferred("add_child",obj)
+	obj.connect("add_to_equation",get_parent(),"add_value_at_end")
 
 func display_all_token():
 	for child in get_children():
@@ -192,3 +198,12 @@ func display_all_token():
 func delete_all_token():
 	for child in get_children():
 		child.queue_free()
+
+func shrink_scale() -> void:
+	var amount_of_characters = get_child_count()
+	print(amount_of_characters)
+	if amount_of_characters > 15:
+		var value = pow(0.95,amount_of_characters - 15)
+		scale = Vector2(value,value)
+	else:
+		scale = Vector2(1,1)

@@ -65,3 +65,5 @@ anims/appear = SubResource( 3 )
 anims/shake = SubResource( 4 )
 
 [connection signal="input_event" from="." to="." method="_on_characters_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_characters_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_characters_mouse_exited"]

@@ -25,10 +25,10 @@ func _input(event):
 			start_drawing = true
 		elif not event.is_pressed():
 			active = false
-			start_drawing = false
 			mouse_rect = Rect2()
 			if get_overlapping_characters().size() > 0:
 				emit_signal("get_all_characters")
+			start_drawing = false
 	
 	if event is InputEventMouseMotion and start_drawing:
 		end_mouse_pos = get_local_mouse_position()
@@ -47,8 +47,7 @@ func _draw():
 	draw_rect(mouse_rect, rectangle_color)
 
 func _physics_process(delta):
-	if start_drawing:
-		update()
+	update()
 
 func activate() -> void:
 	active = true
