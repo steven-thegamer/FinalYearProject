@@ -8,23 +8,14 @@ class level_equation(Node):
 
 	question = export(str)
 	answer = export(str)
+	all_answer_forms = []
 	
 	question_created = signal()
 	
 	possible_numbers = [1,2,3,4,5,6,7,8,9,-1,-2,-3,-4,-5,-6,-7,-8,-9]
 	
 	def _ready(self):
-		rng = RandomNumberGenerator()
-		rng.randomize()
-		x = sym.symbols('x')
-		str_expr = ""
-		size = rng.randi_range(1,5)
-		coeff = self.possible_numbers[rng.randi_range(0,17)]
-		str_expr = str(coeff) + "*x**" + str(size)
-		expr_equation = sym.sympify(str_expr)
-		self.question = str(expr_equation)
-		self.answer = str(sym.diff(expr_equation,x))
-		self.call("emit_signal","question_created")
+		self.generate_new_question()
 	
 	def sympify_equation(self,equation_string):
 		x = sym.symbols('x')
@@ -37,10 +28,22 @@ class level_equation(Node):
 		rng.randomize()
 		x = sym.symbols('x')
 		str_expr = ""
-		size = rng.randi_range(1,5)
+		size = rng.randi_range(2,5)
 		coeff = self.possible_numbers[rng.randi_range(0,17)]
 		str_expr = str(coeff) + "*x**" + str(size)
 		expr_equation = sym.sympify(str_expr)
 		self.question = str(expr_equation)
 		self.answer = str(sym.diff(expr_equation,x))
+		self.all_form_of_answers()
 		self.call("emit_signal","question_created")
+
+	def all_form_of_answers(self):
+		all_possible_answers = []
+		x = sym.symbols('x')
+		answer_expr = self.answer
+		# Find all possible answers according to all possible ways to simplify the equation using SymPy
+		for func in [sym.simplify, sym.expand, sym.factor, lambda expr: sym.collect(expr, x), sym.cancel, sym.apart]:
+			temp = str(func(answer_expr))
+			if temp not in all_possible_answers:
+				all_possible_answers.append(temp)
+		self.all_answer_forms = all_possible_answers

@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Tutorial1.png" type="Texture" id=1]
+[ext_resource path="res://tutorial_pop_up.png" type="Texture" id=2]
+[ext_resource path="res://Tutorial2.png" type="Texture" id=3]
+[ext_resource path="res://arrow.png" type="Texture" id=4]
+[ext_resource path="res://tutorial_slides.gd" type="Script" id=5]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 3 ) ],
+"loop": false,
+"name": "tutorial1",
+"speed": 0.0
+} ]
+
+[node name="tutorial_slides" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1042.0
+margin_bottom = 651.0
+color = Color( 0, 0, 0, 0.611765 )
+
+[node name="TutorialPopUp" type="Sprite" parent="."]
+position = Vector2( 512, 317 )
+scale = Vector2( 0.8, 1 )
+texture = ExtResource( 2 )
+
+[node name="Tutorial1" type="AnimatedSprite" parent="."]
+position = Vector2( 512, 300 )
+frames = SubResource( 1 )
+animation = "tutorial1"
+
+[node name="forward" type="TextureButton" parent="."]
+margin_left = 802.0
+margin_top = 500.0
+margin_right = 850.0
+margin_bottom = 548.0
+texture_normal = ExtResource( 4 )
+
+[node name="backward" type="TextureButton" parent="."]
+visible = false
+margin_left = 169.0
+margin_top = 500.0
+margin_right = 217.0
+margin_bottom = 548.0
+texture_normal = ExtResource( 4 )
+flip_h = true
+
+[connection signal="pressed" from="forward" to="." method="_on_forward_pressed"]
+[connection signal="pressed" from="backward" to="." method="_on_backward_pressed"]

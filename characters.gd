@@ -27,6 +27,7 @@ func _ready():
 		obj.position.x = 32
 		type = character_type.TRIG_FUNCTION
 		char_sprite_node.add_child(obj)
+		obj.material = obj.material.duplicate()
 		set_collider_position_as_obj(obj)
 	elif characters == "ln":
 		shape.extents.x = 16 * characters.length() - 4
@@ -35,6 +36,7 @@ func _ready():
 		obj.position.x = 32
 		type = character_type.LOG_FUNCTION
 		char_sprite_node.add_child(obj)
+		obj.material = obj.material.duplicate()
 		set_collider_position_as_obj(obj)
 	else:
 		if characters == "e":
@@ -56,6 +58,7 @@ func _ready():
 					obj.character = characters[i]
 					obj.position = Vector2(16+40*index,-32)
 					char_sprite_node.add_child(obj)
+					obj.material = obj.material.duplicate()
 					index += 1
 					set_collider_position_as_obj(obj)
 			else:
@@ -63,6 +66,7 @@ func _ready():
 				obj.character = characters[i]
 				obj.position.x = 16+40*index
 				char_sprite_node.add_child(obj)
+				obj.material = obj.material.duplicate()
 				set_collider_position_as_obj(obj)
 				index += 1
 			i += 1
@@ -80,6 +84,7 @@ func _on_characters_input_event(viewport, event, shape_idx):
 		if event.button_index == 1:
 			if event.is_pressed() and draggable:
 				GrabSprite.clone_children(char_sprite_node.get_children())
+				TutorialOnly.emit_signal("player_grab_character")
 			elif not event.is_pressed() and GrabSprite.is_holding_character():
 				match GrabSprite.type:
 					GrabSprite.character_type.NUMBER:
@@ -95,7 +100,7 @@ func _on_characters_input_event(viewport, event, shape_idx):
 							character_type.VARIABLE:
 								original_question_parent.update_equation_string_on_x_multiply(char_pos_in_string,GrabSprite.character_holding)
 					GrabSprite.character_type.OPERATOR:
-						if type == character_type.OPERATOR:
+						if type != character_type.VARIABLE:
 							original_question_parent.equation_string_switch_operator(characters,char_pos_in_string,GrabSprite.character_holding)
 					GrabSprite.character_type.VARIABLE:
 						original_question_parent.multiply_trigonometry_on_equation_string(char_pos_in_string,GrabSprite.character_holding)
@@ -103,7 +108,12 @@ func _on_characters_input_event(viewport, event, shape_idx):
 						if type == character_type.TRIG_FUNCTION:
 							original_question_parent.multiply_trigonometry_equation_string(char_pos_in_string,GrabSprite.character_holding)
 					GrabSprite.character_type.EQUATION:
-						original_question_parent.multiply_value_with_equation(GrabSprite.character_holding,char_pos_in_string,characters)
+						if original_question_parent.get_parent().name != "u-sub":
+							original_question_parent.multiply_value_with_equation(GrabSprite.character_holding,char_pos_in_string,characters)
+				TutorialOnly.emit_signal("player_drop_on_character")
+			elif not event.is_pressed() and not GrabSprite.is_holding_character():
+				TutorialOnly.emit_signal("player_drop_not_on_character")
+		
 		elif event.button_index == 2:
 			if event.is_pressed() and clickable:
 				match type:
@@ -123,3 +133,13 @@ func _on_characters_input_event(viewport, event, shape_idx):
 
 func shake_anim():
 	anim.play("shake")
+
+
+func _on_characters_mouse_entered():
+	for child in char_sprite_node.get_children():
+		child.material.set_shader_param("active", true)
+
+
+func _on_characters_mouse_exited():
+	for child in char_sprite_node.get_children():
+		child.material.set_shader_param("active", false)

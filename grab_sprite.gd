@@ -4,6 +4,8 @@ enum character_type {NUMBER, OPERATOR, VARIABLE, TRIG_FUNCTION, LOG_FUNCTION, PA
 var type : int
 var character_holding : String
 
+signal equation_u_sub
+signal equation_effect(effect)
 
 func _process(delta):
 	global_position = get_global_mouse_position() + Vector2(-16,0)
@@ -34,9 +36,10 @@ func clone_equation(children : Array, equation_value : String):
 	character_holding = "(" + equation_value + ")"
 	var prev_pos = INF
 	var index = 0
-	for child in children:
-		var characters_node = child.char_sprite_node.get_children()
-		for character in characters_node:
+	for i in range(children.size()-1):
+		var child = children[i]
+		var characters_node = child.char_sprite_node
+		for character in characters_node.get_children():
 			var obj = character.duplicate()
 			add_child(obj)
 			if prev_pos != INF:

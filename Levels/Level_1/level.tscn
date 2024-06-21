@@ -1,85 +1,18 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Levels/Level_1/level_question.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/evaluate_button.tscn" type="PackedScene" id=2]
-[ext_resource path="res://reset_button.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Levels/reset_button.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Levels/Level_1/custom_level.gd" type="Script" id=4]
 [ext_resource path="res://Levels/level_task_theme.tres" type="Theme" id=5]
 [ext_resource path="res://paper_full.png" type="Texture" id=6]
 [ext_resource path="res://pause_button.tscn" type="PackedScene" id=7]
-
-[sub_resource type="Animation" id=1]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("instruction:percent_visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("instruction:text")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ "Hold left click on a number and drag it around" ]
-}
-
-[sub_resource type="Animation" id=2]
-resource_name = "instruction_manual_1"
-tracks/0/type = "value"
-tracks/0/path = NodePath("instruction:percent_visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 1.0 ]
-}
-
-[sub_resource type="Animation" id=3]
-resource_name = "instruction_manual_2"
-tracks/0/type = "value"
-tracks/0/path = NodePath("instruction:text")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ "Let go of the number on another number
-and it will be multipled" ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("instruction:percent_visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 1.0 ]
-}
+[ext_resource path="res://Levels/level_progression_bar/level_progress.tscn" type="PackedScene" id=8]
+[ext_resource path="res://tutorial_slides.tscn" type="PackedScene" id=9]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 4 )
+level_dictionary_check = 1
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 margin_top = -174.0
@@ -105,14 +38,14 @@ valign = 1
 [node name="evaluate_button" parent="." instance=ExtResource( 2 )]
 margin_left = 846.0
 margin_top = 209.0
-margin_right = 974.0
-margin_bottom = 337.0
+margin_right = 942.0
+margin_bottom = 305.0
 
 [node name="reset_button" parent="." instance=ExtResource( 3 )]
-margin_left = 846.0
-margin_top = 379.0
-margin_right = 974.0
-margin_bottom = 507.0
+margin_left = 844.8
+margin_top = 395.0
+margin_right = 940.8
+margin_bottom = 491.0
 
 [node name="question" parent="." instance=ExtResource( 1 )]
 position = Vector2( 128, 324 )
@@ -123,21 +56,14 @@ margin_top = 24.0
 margin_right = 106.0
 margin_bottom = 104.0
 
-[node name="instruction_animation" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 1 )
-anims/instruction_manual_1 = SubResource( 2 )
-anims/instruction_manual_2 = SubResource( 3 )
+[node name="level_progress" parent="." instance=ExtResource( 8 )]
+margin_left = 729.0
+margin_top = 590.0
+margin_right = 985.0
+margin_bottom = 622.0
 
-[node name="instruction" type="Label" parent="."]
-margin_left = 49.0
-margin_top = 561.0
-margin_right = 793.0
-margin_bottom = 666.0
-rect_scale = Vector2( 0.5, 0.5 )
-theme = ExtResource( 5 )
-text = "Hold left click on a number and drag it around"
-align = 1
-percent_visible = 0.0
+[node name="tutorial_slides" parent="." instance=ExtResource( 9 )]
 
 [connection signal="pressed" from="evaluate_button" to="." method="_evaluate_answer"]
 [connection signal="pressed" from="reset_button" to="." method="_reset_equation"]
+[connection signal="tree_exiting" from="tutorial_slides" to="." method="_on_tutorial_slides_tree_exiting"]

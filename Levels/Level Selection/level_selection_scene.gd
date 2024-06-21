@@ -2,6 +2,9 @@ extends Node2D
 
 onready var camera = $Camera2D
 onready var display_level = $CanvasLayer/display_level
+onready var coin_ui = $CanvasLayer/coin_ui
+onready var shop_button = $CanvasLayer/shop_button
+onready var shop_pop_up = $CanvasLayer/shop
 
 var scroll_speed = 10
 var active := true
@@ -41,6 +44,10 @@ func _ready():
 	level_button_9.connect("display_title_and_desc",self,"display_level_description")
 	level_button_10.connect("display_title_and_desc",self,"display_level_description")
 
+	if GameLevelProgress.chap_1_level_progress[1].completed == true:
+		coin_ui.show()
+		shop_button.show()
+
 func display_level_description(title,description,path,level_code):
 	display_level.level_code_selection = level_code
 	display_level.update_text(title,description)
@@ -60,4 +67,9 @@ func _input(event):
 			camera.position.y += scroll_speed
 
 func _on_TextureButton_pressed():
-	get_tree().change_scene("res://main_menu/main_menu.tscn")
+	if active:
+		get_tree().change_scene("res://main_menu/main_menu.tscn")
+
+func _on_shop_button_pressed():
+	active = false
+	shop_pop_up.show()
