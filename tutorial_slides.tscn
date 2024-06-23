@@ -1,24 +1,42 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Tutorial1.png" type="Texture" id=1]
 [ext_resource path="res://tutorial_pop_up.png" type="Texture" id=2]
 [ext_resource path="res://Tutorial2.png" type="Texture" id=3]
 [ext_resource path="res://arrow.png" type="Texture" id=4]
 [ext_resource path="res://tutorial_slides.gd" type="Script" id=5]
+[ext_resource path="res://Tutorial3.png" type="Texture" id=6]
+[ext_resource path="res://Tutorial4.png" type="Texture" id=7]
+[ext_resource path="res://Tutorial5.png" type="Texture" id=8]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 1 ), ExtResource( 3 ) ],
+"frames": [ ExtResource( 1 ), ExtResource( 3 ), ExtResource( 6 ) ],
 "loop": false,
 "name": "tutorial1",
 "speed": 0.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "tutorial2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "tutorial3",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "tutorial4",
+"speed": 5.0
 } ]
 
 [node name="tutorial_slides" type="Node2D"]
 script = ExtResource( 5 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_right = 1042.0
+margin_right = 1024.0
 margin_bottom = 651.0
 color = Color( 0, 0, 0, 0.611765 )
 
@@ -30,7 +48,7 @@ texture = ExtResource( 2 )
 [node name="Tutorial1" type="AnimatedSprite" parent="."]
 position = Vector2( 512, 300 )
 frames = SubResource( 1 )
-animation = "tutorial1"
+animation = "tutorial4"
 
 [node name="forward" type="TextureButton" parent="."]
 margin_left = 802.0

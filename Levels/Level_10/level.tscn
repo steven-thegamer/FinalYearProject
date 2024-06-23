@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Levels/Level_10/level_question.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Levels/evaluate_button.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Levels/reset_button.tscn" type="PackedScene" id=3]
+[ext_resource path="res://level_sample.gd" type="Script" id=4]
+[ext_resource path="res://Levels/level_task_theme.tres" type="Theme" id=5]
+[ext_resource path="res://paper_full.png" type="Texture" id=6]
+[ext_resource path="res://pause_button.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Levels/level_progression_bar/level_progress.tscn" type="PackedScene" id=8]
+[ext_resource path="res://storage_box.tscn" type="PackedScene" id=9]
+
+[node name="Level8" type="Node2D"]
+script = ExtResource( 4 )
+num_of_questions = 12
+rewards_not_completed = 15
+rewards_completed = 3
+level_dictionary_check = 8
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+margin_top = -174.0
+margin_right = 1024.0
+margin_bottom = 911.0
+texture = ExtResource( 6 )
+patch_margin_left = 25
+patch_margin_top = 37
+patch_margin_right = 27
+patch_margin_bottom = 29
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+margin_right = 1022.0
+margin_bottom = 82.0
+theme = ExtResource( 5 )
+text = "Derivate the equation!"
+align = 1
+valign = 1
+
+[node name="evaluate_button" parent="." instance=ExtResource( 2 )]
+margin_left = 846.0
+margin_top = 209.0
+margin_right = 942.0
+margin_bottom = 305.0
+
+[node name="reset_button" parent="." instance=ExtResource( 3 )]
+margin_left = 844.8
+margin_top = 395.0
+margin_right = 940.8
+margin_bottom = 491.0
+
+[node name="pause_button" parent="." instance=ExtResource( 7 )]
+margin_left = 26.0
+margin_top = 24.0
+margin_right = 106.0
+margin_bottom = 104.0
+
+[node name="level_progress" parent="." instance=ExtResource( 8 )]
+margin_left = 731.0
+margin_top = 601.0
+margin_right = 987.0
+margin_bottom = 633.0
+
+[node name="u-sub" parent="." instance=ExtResource( 9 )]
+position = Vector2( 88, 561.6 )
+equation_path = NodePath("../question")
+
+[node name="question" parent="." instance=ExtResource( 1 )]
+position = Vector2( 117, 293 )
+
+[connection signal="pressed" from="evaluate_button" to="." method="_evaluate_answer"]
+[connection signal="pressed" from="reset_button" to="." method="_reset_equation"]

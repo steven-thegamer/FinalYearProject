@@ -117,10 +117,11 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 	var starting_position_x = render_position_x
 	var starting_position_y = render_position_y
 	var exponent_position_y = render_position_y - 24
+	print(tokens)
 	while index < token_size:
 		var token : String = tokens[index]
 		if token == "**":
-			if index > 1 and tokens[index - 1] != "e":
+			if index >= 1 and tokens[index - 1] != "e":
 				char_index += 2
 			index += 1
 			var parenthesis = 0

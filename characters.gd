@@ -84,7 +84,6 @@ func _on_characters_input_event(viewport, event, shape_idx):
 		if event.button_index == 1:
 			if event.is_pressed() and draggable:
 				GrabSprite.clone_children(char_sprite_node.get_children())
-				TutorialOnly.emit_signal("player_grab_character")
 			elif not event.is_pressed() and GrabSprite.is_holding_character():
 				match GrabSprite.type:
 					GrabSprite.character_type.NUMBER:
@@ -110,10 +109,8 @@ func _on_characters_input_event(viewport, event, shape_idx):
 					GrabSprite.character_type.EQUATION:
 						if original_question_parent.get_parent().name != "u-sub":
 							original_question_parent.multiply_value_with_equation(GrabSprite.character_holding,char_pos_in_string,characters)
-				TutorialOnly.emit_signal("player_drop_on_character")
-			elif not event.is_pressed() and not GrabSprite.is_holding_character():
-				TutorialOnly.emit_signal("player_drop_not_on_character")
 		
+		# EVENTS OF RIGHT CLICKING
 		elif event.button_index == 2:
 			if event.is_pressed() and clickable:
 				match type:

@@ -47,6 +47,9 @@ func _on_player_rectangle_get_all_characters():
 			characters_highlighted_arr.pop_back()
 		var eq_string = equation_obj.equation_string.replace(" ","")
 		stored_value = eq_string.substr(characters_highlighted_arr[0].char_pos_in_string,characters_highlighted_arr[-1].char_pos_in_string-characters_highlighted_arr[0].char_pos_in_string + 1)
+		if stored_value[0] == "(" and stored_value[-1] == ")":
+			stored_value = stored_value.right(1)
+			stored_value = stored_value.left(stored_value.length() - 1)
 		equation.set_equation_string(stored_value)
 		bin.show()
 	else:

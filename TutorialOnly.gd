@@ -1,7 +1,0 @@
-extends Node
-
-signal player_grab_character
-signal player_drop_not_on_character
-signal player_drop_on_character
-signal player_subtract
-

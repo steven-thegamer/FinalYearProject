@@ -12,7 +12,7 @@ class level_equation(Node):
 	
 	question_created = signal()
 	
-	possible_numbers = [1,2,3,4,5,6,7,8,9,-1,-2,-3,-4,-5,-6,-7,-8,-9]
+	possible_numbers = [1,2,3,4,5,6,7,8,9,0,-1,-2,-3,-4,-5,-6,-7,-8,-9]
 	
 	def _ready(self):
 		self.generate_new_question()
@@ -29,31 +29,19 @@ class level_equation(Node):
 		x = sym.symbols('x')
 		str_expr = ""
 		
-		possible_choice = rng.randi_range(0,2)
+		possible_choice = rng.randi_range(0,1)
 		
 		if possible_choice == 0:
 			# GENERATE (ax+b)(cx+d)
 			for i in range(2):
-				coeff = self.possible_numbers[rng.randi_range(0,17)]
-				coeff_2 = self.possible_numbers[rng.randi_range(0,17)]
+				coeff = self.possible_numbers[rng.randi_range(0,18)]
+				coeff_2 = self.possible_numbers[rng.randi_range(0,18)]
 				str_expr_temp = str(coeff) + "*x + " + str(coeff_2)
 				if i == 0:
 					str_expr = "(" + str_expr_temp + ")*"
 				else:
 					str_expr += "(" + str_expr_temp + ")"
-		
 		elif possible_choice == 1:
-			# GENERATE (ax^2 + bx + c)(dx^2 + ex + f)
-			for i in range(2):
-				coeff = self.possible_numbers[rng.randi_range(0,17)]
-				coeff_2 = self.possible_numbers[rng.randi_range(0,17)]
-				const = self.possible_numbers[rng.randi_range(0,17)]
-				str_expr_temp = str(coeff) + "*x**2 + " + str(coeff_2) + "*x + " + str(const)
-				if i == 0:
-					str_expr = "(" + str_expr_temp + ")*"
-				else:
-					str_expr += "(" + str_expr_temp + ")"
-		elif possible_choice == 2:
 			# GENERATE (ax^2 + bx + c)(dx + e)
 			coeff = self.possible_numbers[rng.randi_range(0,17)]
 			coeff_2 = self.possible_numbers[rng.randi_range(0,17)]

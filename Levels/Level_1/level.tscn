@@ -63,6 +63,7 @@ margin_right = 985.0
 margin_bottom = 622.0
 
 [node name="tutorial_slides" parent="." instance=ExtResource( 9 )]
+tutorial_type = "tutorial1"
 
 [connection signal="pressed" from="evaluate_button" to="." method="_evaluate_answer"]
 [connection signal="pressed" from="reset_button" to="." method="_reset_equation"]

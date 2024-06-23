@@ -56,10 +56,89 @@ func multiply_number_equation_string(value : String , position_multiply : int, m
 func subtract_number_equation_string(value : String , position_subtract : int):
 	equation_string = equation_string.replace(" ","")
 	var size = value.length()
+	# NOTE: for fk sake front is the left la not right
 	var back = equation_string.left(position_subtract)
 	var front = equation_string.right(position_subtract + size)
 	var new_value = str(int(value) - 1)
+	print("Back: ", back, "\nFront:", front,"\nNew Value:", new_value)
+	# Please check all comments with "EDGE CASE" and "NOTE"
+	# EDGE CASE:
+	# 1. 2x^3, since the "back" is [], accessing
+	# back[-1] and back[-2] will result an error
+	# 2. You can multiply - with -, hence -2x^2 (drag the minus
+	# to itself) will create --2x^2 (same with x too apparently)
+	# 3. in -2x^2, if you drag the minus to the power it will become
+	# -2x-2 instead of -2x^(-2)
+	#  4. If you have -3x^3, dragging the 3 to x will result in -33x^3
+	# instead of -9x^3, but this could be a feature i suppose
+	# 
+	if new_value == "1":
+		if not front.empty() and front[0] == "*":
+			if front[1] == "*":
+				# 1**x
+				pass
+			else:
+				# 1*x
+				new_value = ""
+				front = front.right(1)
+		if not back.empty() and back[-1] == "*":
+			if back[-2] == "*":
+				# **1
+				new_value = ""
+				back = back.left(back.length() - 2)
+			else:
+				# *1
+				new_value = ""
+				back = back.left(back.length() - 1)
+				
+	elif new_value == "0":
+		if not front.empty() and front[0] == "*":
+			if front[1] == "*":
+				# 0**x
+				pass
+			elif front[1] == "x":
+				# 0*x
+				# NOTE: 0*x = 0, should not simplify to x
+				# SEARCH FRONT UNTIL THERE EXISTS AN OPERATOR (+ OR -) OR A PARENTHESIS ()
+				var index = 1
+				while index < front.length():
+					if front[index] == "+" or front[index] == "-" or front[index] == ")" or front[index] == "(":
+						break
+					index += 1
+				front = front.right(index)
+			else:
+				# 0+
+				# 0-
+				new_value = ""
+				front = front.right(1)
+		if not back.empty() and back[-1] == "*":
+			if back[-2] == "*":
+				# **0
+				new_value = ""
+				back = back.left(back.length() - 2)
+			else:
+				# *0
+				new_value = ""
+				back = back.left(back.length() - 1)
+		elif not back.empty() and (back[-1] == "+" or back[-1] == "-"):
+			# +0 or -0
+			new_value = ""
+			back = back.left(back.length() - 1)
+		elif not back.empty() and back[-1] == "(":
+			# (0
+			new_value = ""
+			
+	# NOTE: William attempted hotfix
+	# From my playtesting, in cases such as x**3, the position to substract is
+	# no longer accurate unfortunately. If the user right click on the x instead
+	# of 3, the position becomes 0 instead of the last element, hence the check
+	# is basically invalid
+	
+	# NOTE: this technique is not good for handling double digit
+	# Example, 33x^3, clicking on 33 will not handle it properly and just
+	# substract from one instead of all
 	equation_string = back + new_value + front
+	
 	get_node("render_token").delete_all_token()
 	equation_string = get_node("equation").sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
@@ -124,19 +203,25 @@ func update_equation_string_on_x(x_position : int):
 	if x_position + 1 < equation_string.length() and equation_string[x_position + 1] == "*" and equation_string[x_position + 2] == "*":
 		var power_x_value = equation_string[x_position + 3]
 		var new_power_value = str(int(power_x_value) - 1)
-		var back = equation_string.left(x_position+3)
+		var back : String
 		var front = equation_string.right(x_position + 4)
+		if new_power_value == "1":
+			new_power_value = ""
+			back = equation_string.left(x_position+1)
+		else:
+			back = equation_string.left(x_position+3)
 		equation_string = back + new_power_value + front
-		get_node("render_token").delete_all_token()
-		equation_string = get_node("equation").sympify_equation(equation_string)
-		get_node("render_token").render_all(equation_string)
 	else:
 		var back = equation_string.left(x_position)
 		var front = equation_string.right(x_position + 1)
-		equation_string = back + "1" + front
-		get_node("render_token").delete_all_token()
-		equation_string = get_node("equation").sympify_equation(equation_string)
-		get_node("render_token").render_all(equation_string)
+		
+		if not back.empty() and  back[-1] == "*":
+			back = back.left(back.length() - 1)
+		
+		equation_string = back + front
+	get_node("render_token").delete_all_token()
+	equation_string = get_node("equation").sympify_equation(equation_string)
+	get_node("render_token").render_all(equation_string)
 
 func update_equation_string_on_x_multiply(x_position : int, value : String):
 	equation_string = equation_string.replace(" ","")
@@ -179,9 +264,9 @@ func convert_ln_to_fraction(log_pos : int):
 func equation_string_switch_operator(character: String, operator_pos : int, another_character : String):
 	equation_string = equation_string.replace(" ","")
 	var back = equation_string.left(operator_pos)
-	var front = equation_string.right(operator_pos)
+	var size = character.length()
+	var front = equation_string.right(operator_pos + size)
 	equation_string = back + another_character + front
-	print(equation_string)
 	get_node("render_token").delete_all_token()
 	equation_string = get_node("equation").sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
@@ -202,7 +287,8 @@ func multiply_value_with_equation(equation: String, value_pos : int, character_h
 	GrabSprite.emit_signal("equation_u_sub")
 
 func evaluate_answer():
-	return equation_string == target_string or other_possible_targets.has(equation_string)
+	var answer = get_node("equation").sympify_equation(equation_string)
+	return answer == target_string or other_possible_targets.has(answer)
 
 func generate_new_equation():
 	get_node("render_token").delete_all_token()
@@ -210,11 +296,12 @@ func generate_new_equation():
 
 func make_all_equation_shake():
 	for child in get_node("render_token").get_children():
-		child.shake_anim()
+		if child.has_method("shake_anim"):
+			child.shake_anim()
 
 func add_value_at_end(value : String):
 	equation_string = equation_string.replace(" ","")
 	equation_string = equation_string + "+" + value
 	get_node("render_token").delete_all_token()
-	equation_string = get_node("equation").sympify_equation(equation_string)
+#	equation_string = get_node("equation").sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)

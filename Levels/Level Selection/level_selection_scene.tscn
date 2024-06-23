@@ -123,7 +123,7 @@ margin_bottom = 158.0
 level_number = 3
 level_path = "res://Levels/Level_3/level.tscn"
 title = "One Last Basic Practice"
-desc = "Alright, one last practice before going to something [rainbow]new[/rainbow]!"
+desc = "Alright, one last practice before going to something [rainbow]new[/rainbow]! I'm just making sure that you clearly understand how it works. [wave]Math is all about practice, after all! [/wave]"
 level_code = "level3"
 
 [node name="level_button4" parent="." instance=ExtResource( 1 )]
@@ -144,8 +144,8 @@ margin_right = 479.0
 margin_bottom = -363.0
 level_number = 5
 level_path = "res://Levels/Level_5/level.tscn"
-title = "The Quotient Rule"
-desc = "There's name may looks cool, but it's just division. This time, you are finding the derivative of a function that is the ratio of two functions."
+title = "A More Complex Product"
+desc = "How about another go? Before, the equations are simple. Now, it's a bit longer and more complex! Is it going to be [b]hard?[/b] [i]Maybe[/i]. But, you need to remember that if you get the pattern, it will be easy!"
 level_code = "level5"
 
 [node name="level_button6" parent="." instance=ExtResource( 1 )]
@@ -155,6 +155,8 @@ margin_right = 602.0
 margin_bottom = -562.0
 level_number = 6
 level_path = "res://Levels/Level_6/level.tscn"
+title = "The Quotient Rule"
+desc = "Quotient can be a cool name, but it's just another name for division. This time, you are finding the derivative of a function that is the ratio of two functions. Good luck!"
 level_code = "level6"
 
 [node name="level_button7" parent="." instance=ExtResource( 1 )]
@@ -164,6 +166,8 @@ margin_right = 454.0
 margin_bottom = -823.0
 level_number = 7
 level_path = "res://Levels/Level_7/level.tscn"
+title = "More Confusing Quotient!"
+desc = "Was the previous level [b][i]confusing[/i][/b]? It will be more confusing in this level if you're not used to it. Good luck!"
 level_code = "level7"
 
 [node name="level_button8" parent="." instance=ExtResource( 1 )]
@@ -173,6 +177,8 @@ margin_right = 677.0
 margin_bottom = -1022.0
 level_number = 8
 level_path = "res://Levels/Level_8/level.tscn"
+title = "Chain Rule"
+desc = "The chain rule tells us how to find the derivative of a composite function. Too hard to understand? Let's say a function is multiplied by itself, for example, [b]10[/b] times. Using the usual product rule is going to be [i]tiring[/i]. This rule will help [rainbow]solve[/rainbow] that kind of problem."
 level_code = "level8"
 
 [node name="level_button9" parent="." instance=ExtResource( 1 )]
@@ -182,6 +188,8 @@ margin_right = 549.0
 margin_bottom = -1214.0
 level_number = 9
 level_path = "res://Levels/Level_9/level.tscn"
+title = "A Simple, yet More Complex Chain"
+desc = "The chain rule is quite easy to understand and is the simplest rule. Let's make it [b][shake rate=50 level=10 connected=1]harder[/shake][/b], alright?"
 level_code = "level9"
 
 [node name="level_button10" parent="." instance=ExtResource( 1 )]
@@ -191,6 +199,8 @@ margin_right = 622.0
 margin_bottom = -1442.0
 level_number = 10
 level_path = "res://Levels/Level_10/level.tscn"
+title = "The Final Test"
+desc = "You're almost reaching to the next chapter! All the materials in here is everything that you've learnt in this chapter! If you're not ready, go ahead and go back to the old levels and practice again! If you're ready, go ahead and continue in this level. [rainbow][tornado][b]Good luck![/b][/tornado][/rainbow]"
 level_code = "level10"
 
 [node name="freeplay_button" parent="." instance=ExtResource( 9 )]

@@ -17,6 +17,7 @@ func _ready():
 	equation_obj = get_node("question")
 
 func _evaluate_answer():
+	SoundEffects.click_audio_play()
 	if equation_obj.evaluate_answer():
 		solved_questions += 1
 		update_progress_bar()
@@ -36,6 +37,7 @@ func _evaluate_answer():
 		equation_obj.make_all_equation_shake()
 
 func _reset_equation():
+	SoundEffects.click_audio_play()
 	equation_obj.revert_to_original()
 
 func _on_player_rectangle_get_all_characters():

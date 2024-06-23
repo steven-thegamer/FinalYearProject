@@ -49,6 +49,7 @@ func _ready():
 		shop_button.show()
 
 func display_level_description(title,description,path,level_code):
+	SoundEffects.click_audio_play()
 	display_level.level_code_selection = level_code
 	display_level.update_text(title,description)
 	display_level.scene_path = path
@@ -56,7 +57,6 @@ func display_level_description(title,description,path,level_code):
 
 func _process(delta):
 	camera.position.y = clamp(camera.position.y,-1600,0)
-	
 	active = !display_level.visible
 
 func _input(event):
@@ -68,8 +68,10 @@ func _input(event):
 
 func _on_TextureButton_pressed():
 	if active:
+		SoundEffects.click_audio_play()
 		get_tree().change_scene("res://main_menu/main_menu.tscn")
 
 func _on_shop_button_pressed():
+	SoundEffects.click_audio_play()
 	active = false
 	shop_pop_up.show()

@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Levels/Level_3/level_question.tscn" type="PackedScene" id=1]
+[ext_resource path="res://tutorial_slides.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/evaluate_button.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/reset_button.tscn" type="PackedScene" id=3]
 [ext_resource path="res://level_sample.gd" type="Script" id=4]
@@ -8,6 +8,7 @@
 [ext_resource path="res://paper_full.png" type="Texture" id=6]
 [ext_resource path="res://pause_button.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Levels/level_progression_bar/level_progress.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Levels/Level_2/level_question.tscn" type="PackedScene" id=9]
 
 [node name="Level2" type="Node2D"]
 script = ExtResource( 4 )
@@ -47,9 +48,6 @@ margin_top = 395.0
 margin_right = 940.8
 margin_bottom = 491.0
 
-[node name="question" parent="." instance=ExtResource( 1 )]
-position = Vector2( 128, 324 )
-
 [node name="pause_button" parent="." instance=ExtResource( 7 )]
 margin_left = 26.0
 margin_top = 24.0
@@ -61,6 +59,12 @@ margin_left = 731.0
 margin_top = 601.0
 margin_right = 987.0
 margin_bottom = 633.0
+
+[node name="question" parent="." instance=ExtResource( 9 )]
+position = Vector2( 128, 324 )
+
+[node name="tutorial_slides" parent="." instance=ExtResource( 1 )]
+tutorial_type = "tutorial2"
 
 [connection signal="pressed" from="evaluate_button" to="." method="_evaluate_answer"]
 [connection signal="pressed" from="reset_button" to="." method="_reset_equation"]
