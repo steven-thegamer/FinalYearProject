@@ -1,4 +1,5 @@
 extends Node2D
+class_name fraction
 
 var numerator : String = ""
 var denumerator : String = ""
@@ -30,3 +31,11 @@ func _ready():
 		# CREATE GAP
 		var gap = longest_length - num_length
 		num_obj.position.x += gap/2
+
+func add_equation_to_numerator(value : String):
+	numerator = numerator + "+" + value
+	get_parent().equation_string = get_parent().equation_string.replace(" ","")
+	
+
+func add_equation_to_denominator():
+	pass

@@ -266,7 +266,15 @@ func equation_string_switch_operator(character: String, operator_pos : int, anot
 	var back = equation_string.left(operator_pos)
 	var size = character.length()
 	var front = equation_string.right(operator_pos + size)
-	equation_string = back + another_character + front
+	var new_character := another_character
+	if character == "-" or character == "+":
+		if character == another_character:
+			new_character = "+"
+		else:
+			new_character = "-"
+	else:
+		new_character = another_character + character
+	equation_string = back + new_character + front
 	get_node("render_token").delete_all_token()
 	equation_string = get_node("equation").sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)

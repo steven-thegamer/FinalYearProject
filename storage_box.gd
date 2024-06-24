@@ -32,12 +32,12 @@ func check_validity(char_array : Array) -> bool:
 	var front_char = char_array[0]
 	var last_char = char_array[-1]
 	var char_arr_size = char_array.size()
-	while front_char is add_to_equation:
+	while front_char is add_equation:
 		front_index += 1
 		if front_index >= char_arr_size:
 			return false
 		front_char = char_array[front_index]
-	while last_char is add_to_equation:
+	while last_char is add_equation:
 		last_index -= 1
 		if last_index <= -char_arr_size or front_index == last_index:
 			return false
@@ -54,9 +54,9 @@ func _on_player_rectangle_get_all_characters():
 	is_stored = true
 	characters_highlighted_arr = rectangle_mouse_highlight.get_overlapping_areas()
 	if check_validity(characters_highlighted_arr):
-		while characters_highlighted_arr[0] is add_to_equation:
+		while characters_highlighted_arr[0] is add_equation:
 			characters_highlighted_arr.pop_front()
-		while characters_highlighted_arr[-1] is add_to_equation:
+		while characters_highlighted_arr[-1] is add_equation:
 			characters_highlighted_arr.pop_back()
 		var eq_string = equation_obj.equation_string.replace(" ","")
 		stored_value = eq_string.substr(characters_highlighted_arr[0].char_pos_in_string,characters_highlighted_arr[-1].char_pos_in_string-characters_highlighted_arr[0].char_pos_in_string + 1)

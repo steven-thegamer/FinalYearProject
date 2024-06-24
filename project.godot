@@ -20,9 +20,14 @@ _global_script_classes=[ {
 "path": "res://savegame.gd"
 }, {
 "base": "Area2D",
-"class": "add_to_equation",
+"class": "add_equation",
 "language": "GDScript",
 "path": "res://addition_to_equation.gd"
+}, {
+"base": "Node2D",
+"class": "fraction",
+"language": "GDScript",
+"path": "res://fraction.gd"
 }, {
 "base": "Control",
 "class": "shop_item_button",
@@ -32,7 +37,8 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "EquationParser": "",
 "SaveGame": "",
-"add_to_equation": "",
+"add_equation": "",
+"fraction": "",
 "shop_item_button": ""
 }
 

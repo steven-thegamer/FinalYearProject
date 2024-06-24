@@ -123,7 +123,7 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 	var obj = addition_object.instance()
 	obj.position = Vector2(starting_position_x + gap_increment * 1.5 ,starting_position_y)
 	call_deferred("add_child",obj)
-	obj.connect("add_to_equation",get_parent(),"add_value_at_end")
+	obj.connect("add_to_equation",get_parent().get_parent().get_parent(),"add_value_at_end")
 	return Vector2(starting_position_x,char_index)
 
 func display_all_token():

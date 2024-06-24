@@ -1,5 +1,5 @@
 extends Area2D
-class_name add_to_equation
+class_name add_equation
 
 onready var plus_sign := $PlusSign
 var mouse_in := false
