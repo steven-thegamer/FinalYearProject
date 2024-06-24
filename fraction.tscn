@@ -14,9 +14,9 @@ centered = false
 offset = Vector2( 0, -2 )
 
 [node name="numerator" type="Node2D" parent="."]
-position = Vector2( 0, -32 )
+position = Vector2( 0, -36 )
 script = ExtResource( 3 )
 
 [node name="denumerator" type="Node2D" parent="."]
-position = Vector2( 0, 40 )
+position = Vector2( 0, 36 )
 script = ExtResource( 3 )

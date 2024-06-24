@@ -14,6 +14,7 @@ const token_patterns = [
 		]
 
 const character_sprite_preload := preload("res://characters.tscn")
+const addition_object := preload("res://addition_to_equation.tscn")
 
 func create_character_sprite(character : String, char_position : Vector2, char_index : int):
 	var obj = character_sprite_preload.instance()
@@ -119,6 +120,10 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 		elif token == "*":
 			char_index += 1
 		index += 1
+	var obj = addition_object.instance()
+	obj.position = Vector2(starting_position_x + gap_increment * 1.5 ,starting_position_y)
+	call_deferred("add_child",obj)
+	obj.connect("add_to_equation",get_parent(),"add_value_at_end")
 	return Vector2(starting_position_x,char_index)
 
 func display_all_token():

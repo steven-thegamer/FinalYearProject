@@ -276,11 +276,29 @@ func multiply_value_with_equation(equation: String, value_pos : int, character_h
 	if character_hovered_at == ")":
 		var back = equation_string.left(value_pos+1)
 		var front = equation_string.right(value_pos+1)
-		equation_string = back + "*(" + equation + ")" + front
+		
+		# SYMPY WORKS BY READING AN EQUATION FROM LEFT TO RIGHT
+		var parenthesis_counter = 1
+		var index = -2
+		while parenthesis_counter > 0:
+			if back[index] == ")":
+				parenthesis_counter += 1
+			elif back[index] == "(":
+				parenthesis_counter -= 1
+			index -= 1
+		
+		if back[index] == "/":
+			equation_string = back + "/(" + equation + ")" + front
+		else:
+			equation_string = back + "*(" + equation + ")" + front
 	else:
 		var back = equation_string.left(value_pos)
 		var front = equation_string.right(value_pos)
-		equation_string = back + "(" + equation + ")*" + front
+		
+		if back[-1] == "/":
+			equation_string = back + "(" + equation + ")/" + front
+		else:
+			equation_string = back + "(" + equation + ")*" + front
 	get_node("render_token").delete_all_token()
 	equation_string = get_node("equation").sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
