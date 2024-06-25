@@ -10,6 +10,8 @@ export (int) var level_dictionary_check := 0
 var solved_questions := 0
 
 const level_completed_scence := preload("res://Levels/level_completed.tscn")
+const particle_complete := preload("res://add_progress.tscn")
+const initial := preload("res://initial_add_progress.tscn")
 
 onready var level_progress_bar = $level_progress
 
@@ -21,6 +23,7 @@ func _evaluate_answer():
 	if equation_obj.evaluate_answer():
 		solved_questions += 1
 		update_progress_bar()
+		create_particle_to_progress_bar()
 		if solved_questions == num_of_questions:
 			var obj = level_completed_scence.instance()
 			if GameLevelProgress.chap_1_level_progress[level_dictionary_check].completed:
@@ -45,3 +48,14 @@ func _on_player_rectangle_get_all_characters():
 
 func update_progress_bar() -> void:
 	level_progress_bar.value = float(solved_questions) * 100 / float(num_of_questions)
+
+func create_particle_to_progress_bar():
+	var obj_2 = initial.instance()
+	obj_2.position = equation_obj.position
+	add_child(obj_2)
+	var obj = particle_complete.instance()
+	obj.position = equation_obj.position
+	yield(get_tree().create_timer(0.75),"timeout")
+	add_child(obj)
+	obj.get_node("Tween").interpolate_property(obj,"position",obj.position,level_progress_bar.rect_position,1.0,Tween.TRANS_BOUNCE,Tween.EASE_IN_OUT)
+	obj.get_node("Tween").start()

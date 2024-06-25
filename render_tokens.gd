@@ -117,7 +117,6 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 	var starting_position_x = render_position_x
 	var starting_position_y = render_position_y
 	var exponent_position_y = render_position_y - 24
-	print(tokens)
 	while index < token_size:
 		var token : String = tokens[index]
 		if token == "**":
@@ -202,7 +201,6 @@ func delete_all_token():
 
 func shrink_scale() -> void:
 	var amount_of_characters = get_child_count()
-	print(amount_of_characters)
 	if amount_of_characters > 15:
 		var value = pow(0.95,amount_of_characters - 15)
 		scale = Vector2(value,value)

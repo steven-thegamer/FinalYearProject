@@ -37,7 +37,6 @@ func multiply_trigonometry_equation_string(position_multiply : int, string_multi
 	var multiplier_trig = string_multiply + inside_trig_function
 	var front = equation_string.right(limit_front)
 	equation_string = back + multiplier_trig + "*" + full_trig_function + front
-	print(equation_string)
 	get_node("render_token").delete_all_token()
 	equation_string = get_node("equation").sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
@@ -60,7 +59,6 @@ func subtract_number_equation_string(value : String , position_subtract : int):
 	var back = equation_string.left(position_subtract)
 	var front = equation_string.right(position_subtract + size)
 	var new_value = str(int(value) - 1)
-	print("Back: ", back, "\nFront:", front,"\nNew Value:", new_value)
 	# Please check all comments with "EDGE CASE" and "NOTE"
 	# EDGE CASE:
 	# 1. 2x^3, since the "back" is [], accessing

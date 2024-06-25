@@ -57,12 +57,18 @@ bbcode_enabled = true
 bbcode_text = "This is a description
 [b]This is a bolded description[/b]
 [i]This is an italic description[/i]
-[b][i]This is italic and bolded description[/i][/b]"
+[b][i]This is italic and bolded description[/i][/b]
+[wave]This is a wavy text[/wave]
+[shake]This is a shaky text[/shake]
+[rainbow]This is a rainbow text[/rainbow]"
 tab_size = 8
 text = "This is a description
 This is a bolded description
 This is an italic description
-This is italic and bolded description"
+This is italic and bolded description
+This is a wavy text
+This is a shaky text
+This is a rainbow text"
 fit_content_height = true
 
 [node name="TitleText" type="Label" parent="."]

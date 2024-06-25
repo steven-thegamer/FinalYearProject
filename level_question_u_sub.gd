@@ -35,7 +35,6 @@ func multiply_trigonometry_equation_string(position_multiply : int, string_multi
 	var multiplier_trig = string_multiply + inside_trig_function
 	var front = equation_string.right(limit_front)
 	equation_string = back + multiplier_trig + "*" + full_trig_function + front
-	print(equation_string)
 	render_token.delete_all_token()
 	equation_string = get_node("equation").sympify_equation(equation_string)
 	render_token.render_all(equation_string)
@@ -194,7 +193,6 @@ func equation_string_switch_operator(character: String, operator_pos : int, anot
 	var back = equation_string.left(operator_pos)
 	var front = equation_string.right(operator_pos)
 	equation_string = back + another_character + front
-	print(equation_string)
 	get_node("render_token").delete_all_token()
 	equation_string = get_node("equation").sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)

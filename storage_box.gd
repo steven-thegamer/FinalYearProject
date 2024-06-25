@@ -42,8 +42,6 @@ func check_validity(char_array : Array) -> bool:
 		if last_index <= -char_arr_size or front_index == last_index:
 			return false
 		last_char = char_array[last_index]
-	print(front_char)
-	print(last_char)
 	if front_char.type == front_char.character_type.OPERATOR or last_char.type == last_char.character_type.OPERATOR:
 		return false
 	if (front_char.characters == "(" and last_char.characters != ")") or (front_char.characters != "(" and last_char.characters == ")"):

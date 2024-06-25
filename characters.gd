@@ -131,7 +131,6 @@ func _on_characters_input_event(viewport, event, shape_idx):
 func shake_anim():
 	anim.play("shake")
 
-
 func _on_characters_mouse_entered():
 	for child in char_sprite_node.get_children():
 		child.material.set_shader_param("active", true)
