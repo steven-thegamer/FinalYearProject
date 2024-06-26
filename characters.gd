@@ -1,4 +1,5 @@
 extends Area2D
+class_name token
 
 onready var collider = $CollisionShape2D
 onready var char_sprite_node = $character_sprites

@@ -39,7 +39,7 @@ func _input(event):
 func get_overlapping_characters() -> Array:
 	var result := []
 	for child in get_overlapping_areas():
-		if child.is_in_group("character"):
+		if child is token:
 			result.append(child)
 	return result
 
