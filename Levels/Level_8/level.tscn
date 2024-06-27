@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Levels/Level_8/level_question.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/evaluate_button.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://pause_button.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Levels/level_progression_bar/level_progress.tscn" type="PackedScene" id=8]
 [ext_resource path="res://storage_box.tscn" type="PackedScene" id=9]
+[ext_resource path="res://tutorial_slides.tscn" type="PackedScene" id=10]
 
 [node name="Level8" type="Node2D"]
 script = ExtResource( 4 )
@@ -64,6 +65,9 @@ equation_path = NodePath("../question")
 
 [node name="question" parent="." instance=ExtResource( 1 )]
 position = Vector2( 77, 293 )
+
+[node name="tutorial_slides" parent="." instance=ExtResource( 10 )]
+tutorial_type = "tutorial5"
 
 [connection signal="pressed" from="evaluate_button" to="." method="_evaluate_answer"]
 [connection signal="pressed" from="reset_button" to="." method="_reset_equation"]

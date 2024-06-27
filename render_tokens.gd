@@ -2,6 +2,7 @@ extends Node2D
 
 const gap_increment := 44
 
+# ONLY FOR DISPLAY, DOES NOT HAVE ANY MEANING
 const token_patterns = [
 			['\\d+(\\.\\d+)?', 'NUMBER'],          # Match numbers [integer or floating-point]
 			['x', 'VARIABLE'],  # Match variables [letters followed by letters, digits, or underscores]
