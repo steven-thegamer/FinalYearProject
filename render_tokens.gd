@@ -2,8 +2,6 @@ extends Node2D
 
 const gap_increment := 44
 
-var starting_position_x := 16
-
 const token_patterns = [
 			['\\d+(\\.\\d+)?', 'NUMBER'],          # Match numbers [integer or floating-point]
 			['x', 'VARIABLE'],  # Match variables [letters followed by letters, digits, or underscores]
@@ -21,7 +19,6 @@ func render_all(equation : String):
 	var equation_token = tokenize(equation)
 	var better_equation_token = parse_tokens(equation_token)
 	yield(render_tokens(better_equation_token,16,0),"completed")
-#	display_all_token()
 	shrink_scale()
 
 func create_character_sprite(character : String, char_position : Vector2, char_index : int):
@@ -32,7 +29,6 @@ func create_character_sprite(character : String, char_position : Vector2, char_i
 	obj.position = char_position
 	obj.char_pos_in_string = char_index
 	call_deferred("add_child",obj)
-#	obj.hide()
 	yield(obj,"ready")
 
 func tokenize(expression : String):
@@ -118,8 +114,8 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 	var starting_position_y = render_position_y
 	var exponent_position_y = render_position_y - 24
 	while index < token_size:
-		var token : String = tokens[index]
-		if token == "**":
+		var token_string : String = tokens[index]
+		if token_string == "**":
 			if index >= 1 and tokens[index - 1] != "e":
 				char_index += 2
 			index += 1
@@ -154,8 +150,8 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 						elif power_token == "*":
 							char_index += 1
 				index += 1
-		elif "/" in token:
-			var fraction_splitter = token.split("/")
+		elif "/" in token_string:
+			var fraction_splitter = token_string.split("/")
 			var numerator = fraction_splitter[0]
 			var denumerator = fraction_splitter[1]
 			var ori_x = starting_position_x
@@ -166,24 +162,24 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 			call_deferred("add_child",obj)
 			yield(obj,"ready")
 			starting_position_x += obj.longest_length + gap_increment
-		elif token == "sin" or token == "cos" or token == "tan" or token == "csc" or token == "sec" or token == "cot":
+		elif token_string == "sin" or token_string == "cos" or token_string == "tan" or token_string == "csc" or token_string == "sec" or token_string == "cot":
 			starting_position_x += 8
-			yield(create_character_sprite(token,Vector2(starting_position_x,starting_position_y),char_index),"completed")
+			yield(create_character_sprite(token_string,Vector2(starting_position_x,starting_position_y),char_index),"completed")
 			starting_position_x += 96
 			char_index += 3
-		elif token == "ln":
+		elif token_string == "ln":
 			yield(create_character_sprite("ln",Vector2(starting_position_x,starting_position_y),char_index),"completed")
 			starting_position_x += 80
 			char_index += 3
-		elif token == "e":
+		elif token_string == "e":
 			yield(create_character_sprite("e",Vector2(starting_position_x,starting_position_y),char_index),"completed")
 			starting_position_x += 40
 			char_index += 3
-		elif token != "*":
-			yield(create_character_sprite(token,Vector2(starting_position_x,starting_position_y),char_index),"completed")
-			starting_position_x += gap_increment*len(token)
-			char_index += len(token)
-		elif token == "*":
+		elif token_string != "*":
+			yield(create_character_sprite(token_string,Vector2(starting_position_x,starting_position_y),char_index),"completed")
+			starting_position_x += gap_increment*len(token_string)
+			char_index += len(token_string)
+		elif token_string == "*":
 			char_index += 1
 		index += 1
 	var obj = addition_object.instance()
