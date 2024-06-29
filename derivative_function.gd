@@ -5,13 +5,101 @@ var equation_string := ""
 var all_targets := []
 export var level_number := 1
 
+const possible_numbers = [1,2,3,4,5,6,7,8,9,-1,-2,-3,-4,-5,-6,-7,-8,-9]
+const possible_numbers_with_zero = [1,2,3,4,5,6,7,8,9,-1,-2,-3,-4,-5,-6,-7,-8,-9,0]
+
 func _ready():
 	generate_new_equation()
 
+func generate_equation(level_number):
+	var level_equation : String
+	if level_number == 1:
+		level_equation = "a*x**n"
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("n", str(randi() % 4 + 2))
+	elif level_number == 2:
+		level_equation = "a*x**2 + b*x"
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
+	elif level_number == 3:
+		var size = randi() % 3 + 2
+		level_equation = "a*x**2 + b*x + c"
+		if size == 3:
+			level_equation = "a*x**3 + b*x**2 + c*x + d"
+			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+		elif size == 4:
+			level_equation = "a*x**4 + b*x**3 + c*x**2 + d*x + e"
+			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("e", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
+	elif level_number == 4:
+		level_equation = "(a*x + b)*(c*x + d)"
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+	elif level_number == 5:
+		var possible_choice = randi() % 2
+		level_equation = "(a*x + b)*(c*x + d)"
+		if possible_choice == 0:
+			# GENERATE (ax+b)(cx+d)
+			level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+		elif possible_choice == 1:
+			# GENERATE (ax**2 + bx + c)(dx + e)
+			level_equation = "(a*x**2 + b*x + c)*(d*x + e)"
+			level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("e", str(possible_numbers[randi() % 18]))
+	elif level_number == 6:
+		level_equation = "(a*x + b)/(c*x + d)"
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+	elif level_number == 7:
+		var possible_choice = randi() % 3
+		level_equation = "(a*x + b)/(c*x + d)"
+		if possible_choice == 1:
+			level_equation ="(a*x**2 + b*x + c)/(d*x + e)"
+			level_equation = level_equation.replace("e", str(possible_numbers[randi() % 18]))
+		elif possible_choice == 2:
+			level_equation = "(a*x + b)/(c*x**2 + d*x + e)"
+			level_equation = level_equation.replace("e", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+	elif level_number == 8:
+		level_equation = "(a*x + b)**c"
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("c", str(randi() % 5 + 4))
+	elif level_number == 9:
+		var possible_choice = randi() % 3
+		level_equation = "(a*x + b)**c"
+		if possible_choice == 1:
+			level_equation = "d*(a*x + b)**c"
+			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+		elif possible_choice == 2:
+			level_equation = "(a*x**2 + b*x + d)**c"
+			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("c", str(randi() % 5 + 4))
+	return level_equation
+
 func generate_new_equation():
-	equation_string = EquationGenerator.generate_new_equation(level_number)
+	equation_string = generate_equation(level_number)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	original_equation_string = equation_string
-	all_targets = EquationGenerator.all_derivative_answers(equation_string)
+	all_targets = EquationFixerAnswerGenerator.all_derivative_answers(equation_string)
 	get_node("render_token").delete_all_token()
 	get_node("render_token").render_all(equation_string)
 
@@ -42,7 +130,7 @@ func multiply_trigonometry_equation_string(position_multiply : int, string_multi
 	var front = equation_string.right(limit_front)
 	equation_string = back + multiplier_trig + "*" + full_trig_function + front
 	get_node("render_token").delete_all_token()
-	equation_string = EquationGenerator.sympify_equation(equation_string)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
 func multiply_number_equation_string(value : String , position_multiply : int, multiply_value : String):
@@ -53,7 +141,7 @@ func multiply_number_equation_string(value : String , position_multiply : int, m
 	var new_value = str(int(value) * int(multiply_value))
 	equation_string = back + new_value + front
 	get_node("render_token").delete_all_token()
-	equation_string = EquationGenerator.sympify_equation(equation_string)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
 func subtract_number_equation_string(value : String , position_subtract : int):
@@ -65,14 +153,14 @@ func subtract_number_equation_string(value : String , position_subtract : int):
 	var new_value = str(int(value) - 1)
 	# Please check all comments with "EDGE CASE" and "NOTE"
 	# EDGE CASE:
-	# 1. 2x^3, since the "back" is [], accessing
+	# 1. 2x**3, since the "back" is [], accessing
 	# back[-1] and back[-2] will result an error
-	# 2. You can multiply - with -, hence -2x^2 (drag the minus
-	# to itself) will create --2x^2 (same with x too apparently)
-	# 3. in -2x^2, if you drag the minus to the power it will become
-	# -2x-2 instead of -2x^(-2)
-	#  4. If you have -3x^3, dragging the 3 to x will result in -33x^3
-	# instead of -9x^3, but this could be a feature i suppose
+	# 2. You can multiply - with -, hence -2x**2 (drag the minus
+	# to itself) will create --2x**2 (same with x too apparently)
+	# 3. in -2x**2, if you drag the minus to the power it will become
+	# -2x-2 instead of -2x**(-2)
+	#  4. If you have -3x**3, dragging the 3 to x will result in -33x**3
+	# instead of -9x**3, but this could be a feature i suppose
 	# 
 	if new_value == "1":
 		if not front.empty() and front[0] == "*":
@@ -137,12 +225,12 @@ func subtract_number_equation_string(value : String , position_subtract : int):
 	# is basically invalid
 	
 	# NOTE: this technique is not good for handling double digit
-	# Example, 33x^3, clicking on 33 will not handle it properly and just
+	# Example, 33x**3, clicking on 33 will not handle it properly and just
 	# substract from one instead of all
 	equation_string = back + new_value + front
 	
 	get_node("render_token").delete_all_token()
-	equation_string = EquationGenerator.sympify_equation(equation_string)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
 func multiply_trigonometry_on_equation_string(trigonometry_position : int, multiply_value : String):
@@ -151,7 +239,7 @@ func multiply_trigonometry_on_equation_string(trigonometry_position : int, multi
 	var front = equation_string.right(trigonometry_position)
 	equation_string = back + multiply_value + "*" + front
 	get_node("render_token").delete_all_token()
-	equation_string = EquationGenerator.sympify_equation(equation_string)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
 func update_equation_string_on_trigonometry(trigonometry_position : int, power_value : String):
@@ -175,7 +263,7 @@ func update_equation_string_on_trigonometry(trigonometry_position : int, power_v
 	var front = equation_string.right(front_limit_position)
 	equation_string = back + "(" + trigonomety_equation + "**" + power_value + ")" + front
 	get_node("render_token").delete_all_token()
-	equation_string = EquationGenerator.sympify_equation(equation_string)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
 func switch_trigonometry_on_equation_string(trigonometry_position : int, trig_value : String):
@@ -197,7 +285,7 @@ func switch_trigonometry_on_equation_string(trigonometry_position : int, trig_va
 		"cot":
 			equation_string = back + "-csc" + front
 	get_node("render_token").delete_all_token()
-	equation_string = EquationGenerator.sympify_equation(equation_string)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
 func update_equation_string_on_x(x_position : int):
@@ -222,7 +310,7 @@ func update_equation_string_on_x(x_position : int):
 		
 		equation_string = back + front
 	get_node("render_token").delete_all_token()
-	equation_string = EquationGenerator.sympify_equation(equation_string)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
 func update_equation_string_on_x_multiply(x_position : int, value : String):
@@ -232,14 +320,14 @@ func update_equation_string_on_x_multiply(x_position : int, value : String):
 		var front = equation_string.right(x_position + 1)
 		equation_string = back + value + "*x" + front
 		get_node("render_token").delete_all_token()
-		equation_string = EquationGenerator.sympify_equation(equation_string)
+		equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 		get_node("render_token").render_all(equation_string)
 	else:
 		var back = equation_string.left(x_position)
 		var front = equation_string.right(x_position + 1)
 		equation_string = back + value + "*x" + front
 		get_node("render_token").delete_all_token()
-		equation_string = EquationGenerator.sympify_equation(equation_string)
+		equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 		get_node("render_token").render_all(equation_string)
 
 func update_equation_string_logarithm(character : String, log_pos : int, value : String):
@@ -251,7 +339,7 @@ func update_equation_string_logarithm(character : String, log_pos : int, value :
 	elif character == "ln":
 		equation_string = back + value + "*log" + front
 	get_node("render_token").delete_all_token()
-	equation_string = EquationGenerator.sympify_equation(equation_string)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 		
 func convert_ln_to_fraction(log_pos : int):
@@ -260,7 +348,7 @@ func convert_ln_to_fraction(log_pos : int):
 	var front = equation_string.right(log_pos + 3)
 	equation_string = back + "1/" + front
 	get_node("render_token").delete_all_token()
-	equation_string = EquationGenerator.sympify_equation(equation_string)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
 func equation_string_switch_operator(character: String, operator_pos : int, another_character : String):
@@ -278,7 +366,7 @@ func equation_string_switch_operator(character: String, operator_pos : int, anot
 		new_character = another_character + character
 	equation_string = back + new_character + front
 	get_node("render_token").delete_all_token()
-	equation_string = EquationGenerator.sympify_equation(equation_string)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
 func multiply_value_with_equation(equation: String, value_pos : int, character_hovered_at : String):
@@ -310,12 +398,12 @@ func multiply_value_with_equation(equation: String, value_pos : int, character_h
 		else:
 			equation_string = back + "(" + equation + ")*" + front
 	get_node("render_token").delete_all_token()
-	equation_string = EquationGenerator.sympify_equation(equation_string)
+	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 	GrabSprite.emit_signal("equation_u_sub")
 
 func evaluate_answer():
-	var answer = EquationGenerator.sympify_equation(equation_string)
+	var answer = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	return all_targets.has(answer)
 
 func make_all_equation_shake():
@@ -327,5 +415,5 @@ func add_value_at_end(value : String):
 	equation_string = equation_string.replace(" ","")
 	equation_string = equation_string + "+" + value
 	get_node("render_token").delete_all_token()
-#	equation_string = EquationGenerator.sympify_equation(equation_string)
+#	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
