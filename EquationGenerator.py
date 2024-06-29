@@ -88,7 +88,7 @@ class equation_generator(Node):
 			level_question = "(a*x + b)**c"
 			level_equation = level_equation.replace('a',str(self.possible_numbers[rng.randi_range(0,17)]))
 			level_equation = level_equation.replace('b',str(self.possible_numbers[rng.randi_range(0,17)]))
-			level_equation = level_equation.replace('c',str(self.possible_numbers[rng.randi_range(0,17)]))
+			level_equation = level_equation.replace('c',str(rng.randi_range(4,8)))
 		elif level_number == 9:
 			possible_choice = rng.randi_range(0,2)
 			level_question = "(a*x + b)**c"
@@ -100,7 +100,7 @@ class equation_generator(Node):
 				level_equation = level_equation.replace('d',str(self.possible_numbers[rng.randi_range(0,17)]))
 			level_equation = level_equation.replace('a',str(self.possible_numbers[rng.randi_range(0,17)]))
 			level_equation = level_equation.replace('b',str(self.possible_numbers[rng.randi_range(0,17)]))
-			level_equation = level_equation.replace('c',str(self.possible_numbers[rng.randi_range(0,17)]))
+			level_equation = level_equation.replace('c',str(rng.randi_range(4,8)))
 		return level_question
 	
 	# Generates all possible form of answers
