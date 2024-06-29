@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://shop/shop_theme.tres" type="Theme" id=1]
+[ext_resource path="res://shop/shop_items_button3.png" type="Texture" id=2]
+[ext_resource path="res://shop/shop_items_button2.png" type="Texture" id=3]
+[ext_resource path="res://shop/Mouse Cursor/custom_cursor1.png" type="Texture" id=4]
+[ext_resource path="res://shop/shop_items_button1.png" type="Texture" id=5]
+[ext_resource path="res://shop/Mouse Cursor/shop_item_green_cursor.gd" type="Script" id=6]
+
+[node name="shop_item" type="HSplitContainer"]
+margin_left = -2.0
+margin_right = 214.0
+margin_bottom = 94.0
+custom_constants/separation = 0
+script = ExtResource( 6 )
+
+[node name="shop_button" type="TextureButton" parent="."]
+margin_right = 64.0
+margin_bottom = 94.0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 3 )
+texture_disabled = ExtResource( 2 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 64.0 ]
+}
+
+[node name="object_sprite" type="Sprite" parent="shop_button"]
+position = Vector2( 32, 32 )
+texture = ExtResource( 4 )
+
+[node name="labels" type="VBoxContainer" parent="."]
+margin_left = 72.0
+margin_right = 216.0
+margin_bottom = 94.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_constants/separation = 8
+alignment = 1
+
+[node name="title" type="Label" parent="labels"]
+margin_right = 144.0
+margin_bottom = 26.0
+theme = ExtResource( 1 )
+text = "Pink Paper"
+
+[node name="description" type="Label" parent="labels"]
+margin_top = 34.0
+margin_right = 144.0
+margin_bottom = 60.0
+theme = ExtResource( 1 )
+text = "Pink Paper"
+
+[node name="price" type="Label" parent="labels"]
+margin_top = 68.0
+margin_right = 144.0
+margin_bottom = 94.0
+theme = ExtResource( 1 )
+text = "Price: 12345"
+
+[connection signal="pressed" from="shop_button" to="." method="_on_shop_button_pressed"]

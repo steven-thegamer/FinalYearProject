@@ -5,15 +5,15 @@
 [ext_resource path="res://shop/shop_items_button2.png" type="Texture" id=3]
 [ext_resource path="res://paper_full.png" type="Texture" id=4]
 [ext_resource path="res://shop/shop_theme.tres" type="Theme" id=5]
-[ext_resource path="res://shop/shop_item_blue_paper.gd" type="Script" id=6]
+[ext_resource path="res://shop/Paper Background/shop_item_pink_paper.gd" type="Script" id=6]
 
 [node name="shop_item" type="HSplitContainer"]
 margin_right = 40.0
 margin_bottom = 40.0
 custom_constants/separation = 0
 script = ExtResource( 6 )
-item_name = "Blue Paper"
-item_description = "A bright blue paper, calm and soothing"
+item_name = "Pink Paper"
+item_description = "A very pretty pink paper"
 price = 10
 
 [node name="shop_button" type="TextureButton" parent="."]
@@ -28,7 +28,7 @@ __meta__ = {
 }
 
 [node name="object_sprite" type="Sprite" parent="shop_button"]
-modulate = Color( 0.176471, 0.823529, 1, 1 )
+modulate = Color( 1, 0.6, 1, 1 )
 position = Vector2( 32, 32 )
 scale = Vector2( 0.40625, 0.40625 )
 texture = ExtResource( 4 )
