@@ -26,6 +26,7 @@ font_data = ExtResource( 3 )
 
 [sub_resource type="Theme" id=6]
 default_font = SubResource( 2 )
+Label/colors/font_color = Color( 0, 0, 0, 1 )
 Label/fonts/font = SubResource( 2 )
 RichTextLabel/fonts/bold_font = SubResource( 4 )
 RichTextLabel/fonts/bold_italics_font = SubResource( 5 )

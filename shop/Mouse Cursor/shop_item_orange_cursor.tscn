@@ -13,6 +13,9 @@ margin_right = 214.0
 margin_bottom = 94.0
 custom_constants/separation = 0
 script = ExtResource( 6 )
+item_name = "Orange cursor"
+item_description = "A sour cursor"
+price = 10
 
 [node name="shop_button" type="TextureButton" parent="."]
 margin_right = 64.0
