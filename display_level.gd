@@ -10,7 +10,6 @@ func update_text(title_text : String,description_text :  String):
 	tit.text = title_text
 	desc.bbcode_text = description_text
 
-
 func _on_Button_pressed():
 	if scene_path != "":
 		GameLevelProgress.current_level = level_code_selection

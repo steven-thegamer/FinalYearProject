@@ -60,6 +60,7 @@ GrabSprite="*res://grab_sprite.tscn"
 GameLevelProgress="*res://game_level_progress.gd"
 NpcTalkingGlobal="*res://npc_talking_global.gd"
 SoundEffects="*res://SoundEffects.gd"
+EquationGenerator="*res://EquationGenerator.py"
 
 [display]
 

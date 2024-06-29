@@ -91,7 +91,7 @@ rotation = -0.396044
 texture = ExtResource( 4 )
 
 [node name="Line2D" type="Line2D" parent="."]
-points = PoolVector2Array( 515, 579, 509, 356, 429, 110, 577, -122, 419, -404, 548, -604, 379, -889, 645, -1066, 505, -1272, 569, -1474 )
+points = PoolVector2Array( 515, 579, 616, 300, 429, 110, 577, -122, 419, -404, 548, -604, 379, -889, 645, -1066, 505, -1272, 569, -1474 )
 
 [node name="level_button" parent="." instance=ExtResource( 1 )]
 margin_left = 464.0
@@ -105,10 +105,10 @@ desc = "Hello, there! Welcome to the [wave]first[/wave] level of learning Calcul
 level_code = "level1"
 
 [node name="level_button2" parent="." instance=ExtResource( 1 )]
-margin_left = 464.0
-margin_top = 301.0
-margin_right = 560.0
-margin_bottom = 397.0
+margin_left = 573.0
+margin_top = 251.0
+margin_right = 669.0
+margin_bottom = 347.0
 level_number = 2
 level_path = "res://Levels/Level_2/level.tscn"
 title = "A Start"

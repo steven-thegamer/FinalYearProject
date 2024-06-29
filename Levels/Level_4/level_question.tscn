@@ -1,16 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Levels/Level_4/level_equation.py" type="Script" id=1]
 [ext_resource path="res://derivative_function.gd" type="Script" id=2]
 [ext_resource path="res://render_token.tscn" type="PackedScene" id=5]
 
 [node name="question" type="Node2D"]
 position = Vector2( 194, 311 )
 script = ExtResource( 2 )
-
-[node name="equation" type="Node" parent="."]
-script = ExtResource( 1 )
+level_number = 4
 
 [node name="render_token" parent="." instance=ExtResource( 5 )]
-
-[connection signal="question_created" from="equation" to="." method="_on_equation_question_created"]

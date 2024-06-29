@@ -48,7 +48,7 @@ func _ready():
 		coin_ui.show()
 		shop_button.show()
 
-func display_level_description(title,description,path,level_code):
+func display_level_description(title : String,description : String,path : String,level_code : String):
 	SoundEffects.click_audio_play()
 	display_level.level_code_selection = level_code
 	display_level.update_text(title,description)
