@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Tutorial1.png" type="Texture" id=1]
 [ext_resource path="res://tutorial_pop_up.png" type="Texture" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Tutorial3.png" type="Texture" id=6]
 [ext_resource path="res://Tutorial4.png" type="Texture" id=7]
 [ext_resource path="res://Tutorial5.png" type="Texture" id=8]
+[ext_resource path="res://Tutorial6.png" type="Texture" id=9]
+[ext_resource path="res://Tutorial7.png" type="Texture" id=10]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -26,9 +28,14 @@ animations = [ {
 "name": "tutorial3",
 "speed": 5.0
 }, {
-"frames": [  ],
+"frames": [ ExtResource( 9 ) ],
 "loop": true,
 "name": "tutorial4",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "tutorial5",
 "speed": 5.0
 } ]
 
@@ -48,7 +55,7 @@ texture = ExtResource( 2 )
 [node name="Tutorial1" type="AnimatedSprite" parent="."]
 position = Vector2( 512, 300 )
 frames = SubResource( 1 )
-animation = "tutorial4"
+animation = "tutorial5"
 
 [node name="forward" type="TextureButton" parent="."]
 margin_left = 802.0

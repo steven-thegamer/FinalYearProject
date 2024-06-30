@@ -5,102 +5,111 @@ var equation_string := ""
 var all_targets := []
 export var level_number := 1
 
-const possible_numbers = [1,2,3,4,5,6,7,8,9,-1,-2,-3,-4,-5,-6,-7,-8,-9]
-const possible_numbers_with_zero = [1,2,3,4,5,6,7,8,9,-1,-2,-3,-4,-5,-6,-7,-8,-9,0]
+const possible_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, - 1, - 2, - 3, - 4, - 5, - 6, - 7, - 8, - 9]
+const possible_numbers_with_zero = [1, 2, 3, 4, 5, 6, 7, 8, 9, - 1, - 2, - 3, - 4, - 5, - 6, - 7, - 8, - 9, 0]
 
 func _ready():
 	generate_new_equation()
 
-func generate_equation(level_number):
-	var level_equation : String
-	if level_number == 1:
+# This is to create the string of the equation
+func generate_equation(number=level_number):
+	var level_equation: String
+	if number == 1:
 		level_equation = "a*x**n"
-		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % possible_numbers.size()]))
 		level_equation = level_equation.replace("n", str(randi() % 4 + 2))
-	elif level_number == 2:
+	elif number == 2:
 		level_equation = "a*x**2 + b*x"
-		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
-	elif level_number == 3:
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("b", str(possible_numbers[randi() % possible_numbers.size()]))
+	elif number == 3:
 		var size = randi() % 3 + 2
 		level_equation = "a*x**2 + b*x + c"
 		if size == 3:
 			level_equation = "a*x**3 + b*x**2 + c*x + d"
-			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("d", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
 		elif size == 4:
 			level_equation = "a*x**4 + b*x**3 + c*x**2 + d*x + e"
-			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
-			level_equation = level_equation.replace("e", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
-	elif level_number == 4:
+			level_equation = level_equation.replace("d", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+			level_equation = level_equation.replace("e", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("b", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+		level_equation = level_equation.replace("c", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+	elif number == 4:
 		level_equation = "(a*x + b)*(c*x + d)"
-		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
-	elif level_number == 5:
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("b", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+		level_equation = level_equation.replace("c", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("d", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+	elif number == 5:
 		var possible_choice = randi() % 2
 		level_equation = "(a*x + b)*(c*x + d)"
 		if possible_choice == 0:
 			# GENERATE (ax+b)(cx+d)
-			level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
-			level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
-			level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
-			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("a", str(possible_numbers[randi() % possible_numbers.size()]))
+			level_equation = level_equation.replace("b", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+			level_equation = level_equation.replace("c", str(possible_numbers[randi() % possible_numbers.size()]))
+			level_equation = level_equation.replace("d", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
 		elif possible_choice == 1:
 			# GENERATE (ax**2 + bx + c)(dx + e)
 			level_equation = "(a*x**2 + b*x + c)*(d*x + e)"
-			level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
-			level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
-			level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
-			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
-			level_equation = level_equation.replace("e", str(possible_numbers[randi() % 18]))
-	elif level_number == 6:
+			level_equation = level_equation.replace("a", str(possible_numbers[randi() % possible_numbers.size()]))
+			level_equation = level_equation.replace("b", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+			level_equation = level_equation.replace("c", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+			level_equation = level_equation.replace("d", str(possible_numbers[randi() % possible_numbers.size()]))
+			level_equation = level_equation.replace("e", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+	elif number == 6:
 		level_equation = "(a*x + b)/(c*x + d)"
-		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
-	elif level_number == 7:
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("b", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("c", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("d", str(possible_numbers[randi() % possible_numbers.size()]))
+	elif number == 7:
 		var possible_choice = randi() % 3
 		level_equation = "(a*x + b)/(c*x + d)"
 		if possible_choice == 1:
-			level_equation ="(a*x**2 + b*x + c)/(d*x + e)"
-			level_equation = level_equation.replace("e", str(possible_numbers[randi() % 18]))
+			level_equation = "(a*x**2 + b*x + c)/(d*x + e)"
+			level_equation = level_equation.replace("e", str(possible_numbers[randi() % possible_numbers.size()]))
 		elif possible_choice == 2:
 			level_equation = "(a*x + b)/(c*x**2 + d*x + e)"
-			level_equation = level_equation.replace("e", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("c", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
-	elif level_number == 8:
+			level_equation = level_equation.replace("e", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("b", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+		level_equation = level_equation.replace("c", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("d", str(possible_numbers[randi() % possible_numbers.size()]))
+	elif number == 8:
 		level_equation = "(a*x + b)**c"
-		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("b", str(possible_numbers[randi() % possible_numbers.size()]))
 		level_equation = level_equation.replace("c", str(randi() % 5 + 4))
-	elif level_number == 9:
+	elif number == 9:
 		var possible_choice = randi() % 3
 		level_equation = "(a*x + b)**c"
 		if possible_choice == 1:
 			level_equation = "d*(a*x + b)**c"
-			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("d", str(possible_numbers[randi() % possible_numbers.size()]))
 		elif possible_choice == 2:
 			level_equation = "(a*x**2 + b*x + d)**c"
-			level_equation = level_equation.replace("d", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("a", str(possible_numbers[randi() % 18]))
-		level_equation = level_equation.replace("b", str(possible_numbers[randi() % 18]))
+			level_equation = level_equation.replace("d", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
+		level_equation = level_equation.replace("a", str(possible_numbers[randi() % possible_numbers.size()]))
+		level_equation = level_equation.replace("b", str(possible_numbers_with_zero[randi() % possible_numbers_with_zero.size()]))
 		level_equation = level_equation.replace("c", str(randi() % 5 + 4))
 	return level_equation
 
+# This is to generate the new equation
 func generate_new_equation():
-	equation_string = generate_equation(level_number)
+	#This generate an equation in a string form
+	equation_string = generate_equation()
+	# We convert the string form to be in a perfect grammar since we don't want this to happen
+	# x + -3
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
+	# Set variable to equation to be able to reset
 	original_equation_string = equation_string
+	# Generate the derivative form
 	all_targets = EquationFixerAnswerGenerator.all_derivative_answers(equation_string)
+	# Delete all generated tokens if any
 	get_node("render_token").delete_all_token()
+	# Render new tokens
 	get_node("render_token").render_all(equation_string)
 
 func revert_to_original():
@@ -108,13 +117,13 @@ func revert_to_original():
 	get_node("render_token").delete_all_token()
 	get_node("render_token").render_all(equation_string)
 
-func multiply_trigonometry_equation_string(position_multiply : int, string_multiply : String):
-	equation_string = equation_string.replace(" ","")
+func multiply_trigonometry_equation_string(position_multiply: int, string_multiply: String):
+	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(position_multiply)
 	var parenthesis_counter = 0
 	var inside_trig_function := ""
 	var limit_front = 0
-	for i in range(position_multiply + 3,equation_string.length()):
+	for i in range(position_multiply + 3, equation_string.length()):
 		if equation_string[i] == "(":
 			parenthesis_counter += 1
 		elif equation_string[i] == ")":
@@ -125,7 +134,7 @@ func multiply_trigonometry_equation_string(position_multiply : int, string_multi
 		else:
 			inside_trig_function += equation_string[i]
 	inside_trig_function = "(" + inside_trig_function + ")"
-	var full_trig_function = equation_string.substr(position_multiply,3) + inside_trig_function
+	var full_trig_function = equation_string.substr(position_multiply, 3) + inside_trig_function
 	var multiplier_trig = string_multiply + inside_trig_function
 	var front = equation_string.right(limit_front)
 	equation_string = back + multiplier_trig + "*" + full_trig_function + front
@@ -133,8 +142,8 @@ func multiply_trigonometry_equation_string(position_multiply : int, string_multi
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
-func multiply_number_equation_string(value : String , position_multiply : int, multiply_value : String):
-	equation_string = equation_string.replace(" ","")
+func multiply_number_equation_string(value: String, position_multiply: int, multiply_value: String):
+	equation_string = equation_string.replace(" ", "")
 	var size = value.length()
 	var back = equation_string.left(position_multiply)
 	var front = equation_string.right(position_multiply + size)
@@ -144,8 +153,8 @@ func multiply_number_equation_string(value : String , position_multiply : int, m
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
-func subtract_number_equation_string(value : String , position_subtract : int):
-	equation_string = equation_string.replace(" ","")
+func subtract_number_equation_string(value: String, position_subtract: int):
+	equation_string = equation_string.replace(" ", "")
 	var size = value.length()
 	# NOTE: for fk sake front is the left la not right
 	var back = equation_string.left(position_subtract)
@@ -171,8 +180,8 @@ func subtract_number_equation_string(value : String , position_subtract : int):
 				# 1*x
 				new_value = ""
 				front = front.right(1)
-		if not back.empty() and back[-1] == "*":
-			if back[-2] == "*":
+		if not back.empty() and back[- 1] == "*":
+			if back[- 2] == "*":
 				# **1
 				new_value = ""
 				back = back.left(back.length() - 2)
@@ -201,8 +210,8 @@ func subtract_number_equation_string(value : String , position_subtract : int):
 				# 0-
 				new_value = ""
 				front = front.right(1)
-		if not back.empty() and back[-1] == "*":
-			if back[-2] == "*":
+		if not back.empty() and back[- 1] == "*":
+			if back[- 2] == "*":
 				# **0
 				new_value = ""
 				back = back.left(back.length() - 2)
@@ -210,11 +219,11 @@ func subtract_number_equation_string(value : String , position_subtract : int):
 				# *0
 				new_value = ""
 				back = back.left(back.length() - 1)
-		elif not back.empty() and (back[-1] == "+" or back[-1] == "-"):
+		elif not back.empty() and (back[- 1] == "+" or back[- 1] == "-"):
 			# +0 or -0
 			new_value = ""
 			back = back.left(back.length() - 1)
-		elif not back.empty() and back[-1] == "(":
+		elif not back.empty() and back[- 1] == "(":
 			# (0
 			new_value = ""
 			
@@ -233,8 +242,8 @@ func subtract_number_equation_string(value : String , position_subtract : int):
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
-func multiply_trigonometry_on_equation_string(trigonometry_position : int, multiply_value : String):
-	equation_string = equation_string.replace(" ","")
+func multiply_trigonometry_on_equation_string(trigonometry_position: int, multiply_value: String):
+	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(trigonometry_position)
 	var front = equation_string.right(trigonometry_position)
 	equation_string = back + multiply_value + "*" + front
@@ -242,13 +251,13 @@ func multiply_trigonometry_on_equation_string(trigonometry_position : int, multi
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
-func update_equation_string_on_trigonometry(trigonometry_position : int, power_value : String):
-	equation_string = equation_string.replace(" ","")
+func update_equation_string_on_trigonometry(trigonometry_position: int, power_value: String):
+	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(trigonometry_position)
 	var trigonomety_equation = ""
 	var front_limit_position = 0
 	var parenthesis_counter = 0
-	for i in range(trigonometry_position,equation_string.length()):
+	for i in range(trigonometry_position, equation_string.length()):
 		if equation_string[i] == "(":
 			trigonomety_equation += equation_string[i]
 			parenthesis_counter += 1
@@ -256,7 +265,7 @@ func update_equation_string_on_trigonometry(trigonometry_position : int, power_v
 			trigonomety_equation += equation_string[i]
 			parenthesis_counter -= 1
 			if parenthesis_counter == 0:
-				front_limit_position = i+1
+				front_limit_position = i + 1
 				break
 		else:
 			trigonomety_equation += equation_string[i]
@@ -266,8 +275,8 @@ func update_equation_string_on_trigonometry(trigonometry_position : int, power_v
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
-func switch_trigonometry_on_equation_string(trigonometry_position : int, trig_value : String):
-	equation_string = equation_string.replace(" ","")
+func switch_trigonometry_on_equation_string(trigonometry_position: int, trig_value: String):
+	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(trigonometry_position)
 	var front = equation_string.right(trigonometry_position + 3)
 	# TO DO: GENERATE THE DERIVATIVES OF THE TRIGONOMETRY FUNCTIONS
@@ -288,24 +297,24 @@ func switch_trigonometry_on_equation_string(trigonometry_position : int, trig_va
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
-func update_equation_string_on_x(x_position : int):
-	equation_string = equation_string.replace(" ","")
+func update_equation_string_on_x(x_position: int):
+	equation_string = equation_string.replace(" ", "")
 	if x_position + 1 < equation_string.length() and equation_string[x_position + 1] == "*" and equation_string[x_position + 2] == "*":
 		var power_x_value = equation_string[x_position + 3]
 		var new_power_value = str(int(power_x_value) - 1)
-		var back : String
+		var back: String
 		var front = equation_string.right(x_position + 4)
 		if new_power_value == "1":
 			new_power_value = ""
-			back = equation_string.left(x_position+1)
+			back = equation_string.left(x_position + 1)
 		else:
-			back = equation_string.left(x_position+3)
+			back = equation_string.left(x_position + 3)
 		equation_string = back + new_power_value + front
 	else:
 		var back = equation_string.left(x_position)
 		var front = equation_string.right(x_position + 1)
 		
-		if not back.empty() and  back[-1] == "*":
+		if not back.empty() and back[- 1] == "*":
 			back = back.left(back.length() - 1)
 		
 		equation_string = back + front
@@ -313,9 +322,9 @@ func update_equation_string_on_x(x_position : int):
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
-func update_equation_string_on_x_multiply(x_position : int, value : String):
-	equation_string = equation_string.replace(" ","")
-	if x_position > 0 and equation_string[x_position-1] == "*":
+func update_equation_string_on_x_multiply(x_position: int, value: String):
+	equation_string = equation_string.replace(" ", "")
+	if x_position > 0 and equation_string[x_position - 1] == "*":
 		var back = equation_string.left(x_position)
 		var front = equation_string.right(x_position + 1)
 		equation_string = back + value + "*x" + front
@@ -330,8 +339,8 @@ func update_equation_string_on_x_multiply(x_position : int, value : String):
 		equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 		get_node("render_token").render_all(equation_string)
 
-func update_equation_string_logarithm(character : String, log_pos : int, value : String):
-	equation_string = equation_string.replace(" ","")
+func update_equation_string_logarithm(character: String, log_pos: int, value: String):
+	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(log_pos)
 	var front = equation_string.right(log_pos + 3)
 	if character == "e":
@@ -342,8 +351,8 @@ func update_equation_string_logarithm(character : String, log_pos : int, value :
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 		
-func convert_ln_to_fraction(log_pos : int):
-	equation_string = equation_string.replace(" ","")
+func convert_ln_to_fraction(log_pos: int):
+	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(log_pos)
 	var front = equation_string.right(log_pos + 3)
 	equation_string = back + "1/" + front
@@ -351,8 +360,8 @@ func convert_ln_to_fraction(log_pos : int):
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
-func equation_string_switch_operator(character: String, operator_pos : int, another_character : String):
-	equation_string = equation_string.replace(" ","")
+func equation_string_switch_operator(character: String, operator_pos: int, another_character: String):
+	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(operator_pos)
 	var size = character.length()
 	var front = equation_string.right(operator_pos + size)
@@ -369,11 +378,11 @@ func equation_string_switch_operator(character: String, operator_pos : int, anot
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)
 
-func multiply_value_with_equation(equation: String, value_pos : int, character_hovered_at : String):
-	equation_string = equation_string.replace(" ","")
+func multiply_value_with_equation(equation: String, value_pos: int, character_hovered_at: String):
+	equation_string = equation_string.replace(" ", "")
 	if character_hovered_at == ")":
-		var back = equation_string.left(value_pos+1)
-		var front = equation_string.right(value_pos+1)
+		var back = equation_string.left(value_pos + 1)
+		var front = equation_string.right(value_pos + 1)
 		
 		# SYMPY WORKS BY READING AN EQUATION FROM LEFT TO RIGHT
 		var parenthesis_counter = 1
@@ -393,7 +402,7 @@ func multiply_value_with_equation(equation: String, value_pos : int, character_h
 		var back = equation_string.left(value_pos)
 		var front = equation_string.right(value_pos)
 		
-		if back[-1] == "/":
+		if back[- 1] == "/":
 			equation_string = back + "(" + equation + ")/" + front
 		else:
 			equation_string = back + "(" + equation + ")*" + front
@@ -411,8 +420,8 @@ func make_all_equation_shake():
 		if child.has_method("shake_anim"):
 			child.shake_anim()
 
-func add_value_at_end(value : String):
-	equation_string = equation_string.replace(" ","")
+func add_value_at_end(value: String):
+	equation_string = equation_string.replace(" ", "")
 	equation_string = equation_string + "+" + value
 	get_node("render_token").delete_all_token()
 #	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
