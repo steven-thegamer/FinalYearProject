@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://main_menu/play_game1.png" type="Texture" id=1]
 [ext_resource path="res://main_menu/play_game2.png" type="Texture" id=2]
@@ -10,9 +10,6 @@
 [ext_resource path="res://main_menu/quit_game3.png" type="Texture" id=8]
 [ext_resource path="res://main_menu/quit_game1.png" type="Texture" id=9]
 [ext_resource path="res://main_menu/quit_game2.png" type="Texture" id=10]
-[ext_resource path="res://main_menu/settings_game3.png" type="Texture" id=11]
-[ext_resource path="res://main_menu/settings_game1.png" type="Texture" id=12]
-[ext_resource path="res://main_menu/settings_game2.png" type="Texture" id=13]
 [ext_resource path="res://main_menu/main_menu.gd" type="Script" id=14]
 [ext_resource path="res://main_menu/main_menu_bg_sprite_euler.tscn" type="PackedScene" id=15]
 [ext_resource path="res://main_menu/main_menu_bg_sprite_ln.tscn" type="PackedScene" id=16]
@@ -85,18 +82,10 @@ texture_normal = ExtResource( 1 )
 texture_pressed = ExtResource( 2 )
 texture_hover = ExtResource( 3 )
 
-[node name="settings_game" type="TextureButton" parent="VBoxContainer"]
+[node name="quit_game" type="TextureButton" parent="VBoxContainer"]
 margin_top = 44.0
 margin_right = 150.0
 margin_bottom = 84.0
-texture_normal = ExtResource( 12 )
-texture_pressed = ExtResource( 13 )
-texture_hover = ExtResource( 11 )
-
-[node name="quit_game" type="TextureButton" parent="VBoxContainer"]
-margin_top = 88.0
-margin_right = 150.0
-margin_bottom = 128.0
 texture_normal = ExtResource( 9 )
 texture_pressed = ExtResource( 10 )
 texture_hover = ExtResource( 8 )
@@ -107,5 +96,4 @@ z_index = 10
 texture = ExtResource( 17 )
 
 [connection signal="pressed" from="VBoxContainer/play_game" to="." method="_on_play_game_pressed"]
-[connection signal="button_up" from="VBoxContainer/settings_game" to="." method="_on_settings_game_button_up"]
 [connection signal="pressed" from="VBoxContainer/quit_game" to="." method="_on_quit_game_pressed"]
