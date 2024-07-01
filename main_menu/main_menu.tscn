@@ -91,7 +91,7 @@ texture_pressed = ExtResource( 10 )
 texture_hover = ExtResource( 8 )
 
 [node name="GameTitle" type="Sprite" parent="."]
-position = Vector2( 512, 324 )
+position = Vector2( 512, 70 )
 z_index = 10
 texture = ExtResource( 17 )
 
