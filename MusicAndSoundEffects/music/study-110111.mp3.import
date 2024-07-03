@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/study-110111.mp3-a014b1db34cc371e237070a8dbe83367.mp3str"
+
+[deps]
+
+source_file="res://MusicAndSoundEffects/music/study-110111.mp3"
+dest_files=[ "res://.import/study-110111.mp3-a014b1db34cc371e237070a8dbe83367.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/study-7-m-moszkowski-202113.mp3-35c66183ac529e6f18c8673bfe7d99e9.mp3str"
+
+[deps]
+
+source_file="res://MusicAndSoundEffects/music/study-7-m-moszkowski-202113.mp3"
+dest_files=[ "res://.import/study-7-m-moszkowski-202113.mp3-35c66183ac529e6f18c8673bfe7d99e9.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

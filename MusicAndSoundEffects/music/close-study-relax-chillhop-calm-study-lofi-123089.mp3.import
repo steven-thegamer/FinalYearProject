@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/close-study-relax-chillhop-calm-study-lofi-123089.mp3-59cefe0f706a0332975daac6c0c351a4.mp3str"
+
+[deps]
+
+source_file="res://MusicAndSoundEffects/music/close-study-relax-chillhop-calm-study-lofi-123089.mp3"
+dest_files=[ "res://.import/close-study-relax-chillhop-calm-study-lofi-123089.mp3-59cefe0f706a0332975daac6c0c351a4.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

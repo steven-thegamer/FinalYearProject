@@ -17,6 +17,7 @@ onready var level_progress_bar = $level_progress
 
 func _ready():
 	equation_obj = get_node("question")
+	GamePlayTimer.start_game_timer()
 
 func _evaluate_answer():
 	SoundEffects.click_audio_play()
@@ -30,6 +31,12 @@ func _evaluate_answer():
 				obj.reward_text = str(rewards_completed)
 			else:
 				obj.reward_text = str(rewards_not_completed)
+				if NpcTalkingGlobal.ai_talking_lines.has(level_dictionary_check):
+					NpcTalkingGlobal.will_talk = true
+					NpcTalkingGlobal.dialogue_number = level_dictionary_check
+			GamePlayTimer.stop_timer()
+			if GamePlayTimer.get_total_timer() < 600.0:
+				GameLevelProgress.chap_1_level_progress[level_dictionary_check].fast_learner = true
 			add_child(obj)
 		else:
 			equation_obj.generate_new_equation()

@@ -1,16 +1,15 @@
 extends Node
 
-var chap_1_level_progress := {1:{"completed" : true, "unlocked" : true, "perfect_learn" : true},
-					2:{"completed" : true, "unlocked" : true, "perfect_learn" : true},
-					3:{"completed" : true, "unlocked" : true, "perfect_learn" : true},
-					4:{"completed" : true, "unlocked" : true, "perfect_learn" : true},
-					5:{"completed" : true, "unlocked" : true, "perfect_learn" : true},
-					6:{"completed" : false, "unlocked" : false, "perfect_learn" : false},
-					7:{"completed" : false, "unlocked" : false, "perfect_learn" : false},
-					8:{"completed" : true, "unlocked" : true, "perfect_learn" : true},
-					9:{"completed" : true, "unlocked" : true, "perfect_learn" : true},
-					10:{"completed" : true, "unlocked" : true, "perfect_learn" : true},
-					"freeplay":{"completed" : true, "unlocked" : true, "perfect_learn" : true}}
+var chap_1_level_progress := {1:{"completed" : false, "unlocked" : true, "fast_learner" : false},
+					2:{"completed" : false, "unlocked" : false, "fast_learner" : false},
+					3:{"completed" : false, "unlocked" : false, "fast_learner" : false},
+					4:{"completed" : false, "unlocked" : false, "fast_learner" : false},
+					5:{"completed" : false, "unlocked" : false, "fast_learner" : false},
+					6:{"completed" : false, "unlocked" : false, "fast_learner" : false},
+					7:{"completed" : false, "unlocked" : false, "fast_learner" : false},
+					8:{"completed" : false, "unlocked" : false, "fast_learner" : false},
+					9:{"completed" : false, "unlocked" : false, "fast_learner" : false},
+					10:{"completed" : false, "unlocked" : false, "fast_learner" : false},}
 
 var current_level := ""
 

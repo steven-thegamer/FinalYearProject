@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/mars-lofi-study-beat-beats-to-relax-chillhop-122874.mp3-a4cfe2431b70dbd7c60119c3c1d07423.mp3str"
+
+[deps]
+
+source_file="res://MusicAndSoundEffects/music/mars-lofi-study-beat-beats-to-relax-chillhop-122874.mp3"
+dest_files=[ "res://.import/mars-lofi-study-beat-beats-to-relax-chillhop-122874.mp3-a4cfe2431b70dbd7c60119c3c1d07423.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

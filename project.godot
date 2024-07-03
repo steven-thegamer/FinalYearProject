@@ -61,6 +61,8 @@ GameLevelProgress="*res://game_level_progress.gd"
 NpcTalkingGlobal="*res://npc_talking_global.gd"
 SoundEffects="*res://SoundEffects.gd"
 EquationFixerAnswerGenerator="*res://equation_fixer_and_answer_generator.py"
+BackgroundMusic="*res://background_music.tscn"
+GamePlayTimer="*res://GamePlayTimer.tscn"
 
 [display]
 

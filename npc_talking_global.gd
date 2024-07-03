@@ -18,6 +18,7 @@ var ai_talking_lines := {
 		
 }
 
+
 #	0:"default",
 #	1:"happy",
 #	2:"sad",

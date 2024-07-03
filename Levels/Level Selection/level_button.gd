@@ -3,12 +3,14 @@ extends TextureButton
 export (int) var level_number
 export (String) var level_path
 var unlocked := false
+var star := false
 var completed := false
 export (String) var title
 export (String) var desc := ""
 export (String) var level_code
 onready var label = $Label
-
+onready var star_sprite = $Sprite
+onready var particles = $Sprite/CPUParticles2D
 signal display_title_and_desc(title,desc,path,level_code)
 
 func _ready():
@@ -23,3 +25,7 @@ func _ready():
 
 func _on_level_button_pressed():
 	emit_signal("display_title_and_desc",title,desc,level_path,level_code)
+
+func show_star():
+	star_sprite.visible = true
+	particles.emitting = true

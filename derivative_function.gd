@@ -314,8 +314,10 @@ func update_equation_string_on_x(x_position: int):
 		var back = equation_string.left(x_position)
 		var front = equation_string.right(x_position + 1)
 		
-		if not back.empty() and back[- 1] == "*":
+		if not back.empty() and back[-1] == "*":
 			back = back.left(back.length() - 1)
+		if not front.empty() and front[0] == "*":
+			front = front.right(1)
 		
 		equation_string = back + front
 	get_node("render_token").delete_all_token()

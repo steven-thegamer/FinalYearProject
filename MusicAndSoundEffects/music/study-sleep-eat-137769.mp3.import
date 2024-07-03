@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/study-sleep-eat-137769.mp3-b16806c29b18cd7c883c6bb24d16d540.mp3str"
+
+[deps]
+
+source_file="res://MusicAndSoundEffects/music/study-sleep-eat-137769.mp3"
+dest_files=[ "res://.import/study-sleep-eat-137769.mp3-b16806c29b18cd7c883c6bb24d16d540.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

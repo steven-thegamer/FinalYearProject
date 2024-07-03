@@ -30,7 +30,6 @@ var talk_is_done := false
 
 func _ready():
 	pass
-#	talking_array(NpcTalkingGlobal.ai_talking_lines[1],NpcTalkingGlobal.ai_talking_emotions[1])
 
 func _process(delta):
 	particles.emitting = visible
