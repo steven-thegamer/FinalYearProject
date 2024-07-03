@@ -23,5 +23,6 @@ text = "Music by FASSounds from Pixabay"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2( 512, 324 )
+volume_db = -10.0
 
 [connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_AudioStreamPlayer2D_finished"]

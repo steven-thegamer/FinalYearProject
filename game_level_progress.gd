@@ -11,6 +11,8 @@ var chap_1_level_progress := {1:{"completed" : false, "unlocked" : true, "fast_l
 					9:{"completed" : false, "unlocked" : false, "fast_learner" : false},
 					10:{"completed" : false, "unlocked" : false, "fast_learner" : false},}
 
+var shop_item_inventory := []
+
 var current_level := ""
 
 var money := 0

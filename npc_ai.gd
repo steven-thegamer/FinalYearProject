@@ -22,6 +22,7 @@ onready var particles = $CPUParticles2D
 
 signal talking_is_done
 signal next_line
+signal no_more_talking
 
 const character_per_second := 12.0
 
@@ -40,7 +41,6 @@ func _input(event):
 			emit_signal("next_line")
 		elif not skip:
 			skip = true
-	
 
 func talking_array(talking_script : Array, emotion_script : Array):
 	var size = talking_script.size()
@@ -49,6 +49,7 @@ func talking_array(talking_script : Array, emotion_script : Array):
 		yield(self,"talking_is_done")
 		yield(self,"next_line")
 		reset_talking_variables()
+	emit_signal("no_more_talking")
 
 func reset_talking_variables():
 	label.text = ""

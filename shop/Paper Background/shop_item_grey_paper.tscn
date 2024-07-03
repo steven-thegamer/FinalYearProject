@@ -15,10 +15,11 @@ script = ExtResource( 6 )
 item_name = "Grey Paper"
 item_description = "A bit dark paper"
 price = 10
+item_id = "papergrey"
 
 [node name="shop_button" type="TextureButton" parent="."]
 margin_right = 64.0
-margin_bottom = 64.0
+margin_bottom = 94.0
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 4 )
 texture_hover = ExtResource( 4 )
@@ -35,32 +36,31 @@ texture = ExtResource( 1 )
 
 [node name="labels" type="VBoxContainer" parent="."]
 margin_left = 72.0
-margin_right = 144.0
-margin_bottom = 64.0
+margin_right = 216.0
+margin_bottom = 94.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_constants/separation = 8
 alignment = 1
 
 [node name="title" type="Label" parent="labels"]
-margin_top = 4.0
-margin_right = 72.0
-margin_bottom = 17.0
+margin_right = 144.0
+margin_bottom = 26.0
 theme = ExtResource( 5 )
 text = "Pink Paper"
 
 [node name="description" type="Label" parent="labels"]
-margin_top = 25.0
-margin_right = 72.0
-margin_bottom = 38.0
+margin_top = 34.0
+margin_right = 144.0
+margin_bottom = 60.0
 theme = ExtResource( 5 )
 text = "Pink Paper"
 
 [node name="price" type="Label" parent="labels"]
-margin_top = 46.0
-margin_right = 72.0
-margin_bottom = 59.0
+margin_top = 68.0
+margin_right = 144.0
+margin_bottom = 94.0
 theme = ExtResource( 5 )
 text = "Price: 12345"
 
-[connection signal="button_up" from="shop_button" to="." method="_on_shop_button_button_up"]
+[connection signal="pressed" from="shop_button" to="." method="_on_shop_button_pressed"]

@@ -16,8 +16,10 @@ const initial := preload("res://initial_add_progress.tscn")
 onready var level_progress_bar = $level_progress
 
 func _ready():
+	randomize()
 	equation_obj = get_node("question")
 	GamePlayTimer.start_game_timer()
+	get_node("NinePatchRect").modulate = GameLevelProgress.paper_background
 
 func _evaluate_answer():
 	SoundEffects.click_audio_play()

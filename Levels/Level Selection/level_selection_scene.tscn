@@ -41,9 +41,6 @@ margin_top = 590.0
 margin_right = 93.0
 margin_bottom = 638.0
 
-[node name="npc_ai" parent="CanvasLayer" instance=ExtResource( 8 )]
-visible = false
-
 [node name="shop_button" type="TextureButton" parent="CanvasLayer"]
 visible = false
 margin_left = 889.0
@@ -56,6 +53,9 @@ texture_pressed = ExtResource( 14 )
 texture_hover = ExtResource( 15 )
 
 [node name="shop" parent="CanvasLayer" instance=ExtResource( 12 )]
+visible = false
+
+[node name="npc_ai" parent="CanvasLayer" instance=ExtResource( 8 )]
 visible = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -94,9 +94,9 @@ points = PoolVector2Array( 515, 579, 616, 300, 429, 110, 577, -122, 419, -404, 5
 
 [node name="level_button" parent="." instance=ExtResource( 1 )]
 margin_left = 476.0
-margin_top = 492.0
+margin_top = 497.0
 margin_right = 572.0
-margin_bottom = 588.0
+margin_bottom = 593.0
 level_number = 1
 level_path = "res://Levels/Level_1/level.tscn"
 title = "The Introduction"
@@ -204,3 +204,5 @@ level_code = "level10"
 
 [connection signal="pressed" from="CanvasLayer/TextureButton" to="." method="_on_TextureButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/shop_button" to="." method="_on_shop_button_pressed"]
+[connection signal="close_shop" from="CanvasLayer/shop" to="." method="_on_shop_close_shop"]
+[connection signal="no_more_talking" from="CanvasLayer/npc_ai" to="." method="_on_npc_ai_no_more_talking"]

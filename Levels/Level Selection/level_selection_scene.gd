@@ -75,6 +75,7 @@ func display_level_description(title : String,description : String,path : String
 func _process(delta):
 	camera.position.y = clamp(camera.position.y,-1600,0)
 	active = !display_level.visible
+	$Camera2D/NinePatchRect.modulate = GameLevelProgress.paper_background
 
 func _input(event):
 	if event is InputEventMouseButton and active:
@@ -92,3 +93,12 @@ func _on_shop_button_pressed():
 	SoundEffects.click_audio_play()
 	active = false
 	shop_pop_up.show()
+
+func _on_npc_ai_no_more_talking():
+	active = true
+	npc_ai.hide()
+	NpcTalkingGlobal.will_talk = false
+
+func _on_shop_close_shop():
+	active = true
+	shop_pop_up.hide()

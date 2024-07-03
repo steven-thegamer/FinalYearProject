@@ -16,6 +16,7 @@ script = ExtResource( 6 )
 item_name = "Blue cursor"
 item_description = "The cursor like the sky"
 price = 10
+item_id = "cursorblue"
 
 [node name="shop_button" type="TextureButton" parent="."]
 margin_right = 64.0

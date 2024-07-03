@@ -17,12 +17,8 @@ onready var vboxcontainers := [
 onready var left_button = $left_page
 onready var right_button = $right_page
 
-func _ready():
-	pass # Replace with function body.
-
 func _process(delta):
 	left_button.disabled = true if page == min_page else false
-	
 	right_button.disabled = true if page == max_page else false
 
 func _on_back_pressed():

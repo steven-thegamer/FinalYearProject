@@ -15,6 +15,7 @@ script = ExtResource( 5 )
 item_name = "White Paper"
 item_description = "The original white paper"
 bought = true
+item_id = "paperwhite"
 
 [node name="shop_button" type="TextureButton" parent="."]
 margin_right = 64.0
@@ -62,4 +63,4 @@ margin_bottom = 94.0
 theme = ExtResource( 1 )
 text = "Price: 12345"
 
-[connection signal="button_up" from="shop_button" to="." method="_on_shop_button_button_up"]
+[connection signal="pressed" from="shop_button" to="." method="_on_shop_button_pressed"]
