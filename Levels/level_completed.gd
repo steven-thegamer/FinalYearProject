@@ -36,4 +36,6 @@ func _on_continue_pressed():
 		"level9":
 			GameLevelProgress.chap_1_level_progress[10].unlocked = true
 			GameLevelProgress.chap_1_level_progress[9].completed = true
+	GameLevelProgress.transition_exit()
+	yield(GameLevelProgress,"transition_done")
 	get_tree().change_scene("res://Levels/Level Selection/level_selection_scene.tscn")

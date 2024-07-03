@@ -20,6 +20,8 @@ func _ready():
 	equation_obj = get_node("question")
 	GamePlayTimer.start_game_timer()
 	get_node("NinePatchRect").modulate = GameLevelProgress.paper_background
+	GameLevelProgress.transition_enter()
+	yield(GameLevelProgress,"transition_done")
 
 func _evaluate_answer():
 	SoundEffects.click_audio_play()
@@ -41,6 +43,7 @@ func _evaluate_answer():
 				GameLevelProgress.chap_1_level_progress[level_dictionary_check].fast_learner = true
 			add_child(obj)
 		else:
+			get_node("evaluate_button").play_correct()
 			equation_obj.generate_new_equation()
 		var u_sub = get_node_or_null("u-sub")
 		if u_sub:

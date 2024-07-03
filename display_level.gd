@@ -13,6 +13,8 @@ func update_text(title_text : String,description_text :  String):
 func _on_Button_pressed():
 	if scene_path != "":
 		GameLevelProgress.current_level = level_code_selection
+		GameLevelProgress.transition_exit()
+		yield(GameLevelProgress,"transition_done")
 		get_tree().change_scene(scene_path)
 
 

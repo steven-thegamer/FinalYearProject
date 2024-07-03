@@ -93,10 +93,10 @@ texture = ExtResource( 4 )
 points = PoolVector2Array( 515, 579, 616, 300, 429, 110, 577, -122, 419, -404, 548, -604, 379, -889, 645, -1066, 505, -1272, 569, -1474 )
 
 [node name="level_button" parent="." instance=ExtResource( 1 )]
-margin_left = 476.0
-margin_top = 497.0
-margin_right = 572.0
-margin_bottom = 593.0
+margin_left = 485.0
+margin_top = 495.0
+margin_right = 581.0
+margin_bottom = 591.0
 level_number = 1
 level_path = "res://Levels/Level_1/level.tscn"
 title = "The Introduction"

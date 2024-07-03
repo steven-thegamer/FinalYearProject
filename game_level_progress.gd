@@ -18,3 +18,20 @@ var current_level := ""
 var money := 0
 
 var paper_background : Color = Color.white
+
+const transition_object := preload("res://transition.tscn")
+signal transition_done
+
+func transition_enter():
+	var obj = transition_object.instance()
+	obj.transition_type = 1
+	add_child(obj)
+	yield(get_tree().create_timer(0.5),"timeout")
+	emit_signal("transition_done")
+
+func transition_exit():
+	var obj = transition_object.instance()
+	obj.transition_type = 0
+	add_child(obj)
+	yield(get_tree().create_timer(0.5),"timeout")
+	emit_signal("transition_done")

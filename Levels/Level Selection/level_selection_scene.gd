@@ -23,6 +23,7 @@ onready var level_button_10 = $level_button10
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+
 	level_button_1.disabled = !GameLevelProgress.chap_1_level_progress[1].unlocked
 	level_button_2.disabled = !GameLevelProgress.chap_1_level_progress[2].unlocked
 	level_button_3.disabled = !GameLevelProgress.chap_1_level_progress[3].unlocked
@@ -64,7 +65,10 @@ func _ready():
 		npc_ai.visible = true
 		npc_ai.talking_array(NpcTalkingGlobal.ai_talking_lines[NpcTalkingGlobal.dialogue_number],NpcTalkingGlobal.ai_talking_emotions[NpcTalkingGlobal.dialogue_number])
 		active = false
-		
+
+	GameLevelProgress.transition_enter()
+	yield(GameLevelProgress,"transition_done")
+
 func display_level_description(title : String,description : String,path : String,level_code : String):
 	SoundEffects.click_audio_play()
 	display_level.level_code_selection = level_code
@@ -87,6 +91,8 @@ func _input(event):
 func _on_TextureButton_pressed():
 	if active:
 		SoundEffects.click_audio_play()
+		GameLevelProgress.transition_exit()
+		yield(GameLevelProgress,"transition_done")
 		get_tree().change_scene("res://main_menu/main_menu.tscn")
 
 func _on_shop_button_pressed():
