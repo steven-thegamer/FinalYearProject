@@ -33,6 +33,7 @@ texture_hover = ExtResource( 11 )
 
 [node name="display_level" parent="CanvasLayer" instance=ExtResource( 6 )]
 visible = false
+position = Vector2( 512, 324 )
 
 [node name="coin_ui" parent="CanvasLayer" instance=ExtResource( 7 )]
 visible = false

@@ -48,7 +48,7 @@ margin_right = 940.8
 margin_bottom = 491.0
 
 [node name="question" parent="." instance=ExtResource( 1 )]
-position = Vector2( 128, 324 )
+position = Vector2( 110, 352 )
 
 [node name="pause_button" parent="." instance=ExtResource( 7 )]
 margin_left = 26.0
@@ -63,6 +63,7 @@ margin_right = 985.0
 margin_bottom = 622.0
 
 [node name="tutorial_slides" parent="." instance=ExtResource( 9 )]
+visible = false
 tutorial_type = "tutorial1"
 
 [connection signal="pressed" from="evaluate_button" to="." method="_evaluate_answer"]
