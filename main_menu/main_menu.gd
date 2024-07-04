@@ -1,9 +1,9 @@
 extends Node2D
 
 func _ready():
+	$NinePatchRect.modulate = GameLevelProgress.paper_background
 	GameLevelProgress.transition_enter()
 	yield(GameLevelProgress,"transition_done")
-	$NinePatchRect.modulate = GameLevelProgress.paper_background
 
 func _on_play_game_pressed():
 	SoundEffects.click_audio_play()

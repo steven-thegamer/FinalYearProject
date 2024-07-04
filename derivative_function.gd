@@ -302,24 +302,13 @@ func update_equation_string_on_x(x_position: int):
 	if x_position + 1 < equation_string.length() and equation_string[x_position + 1] == "*" and equation_string[x_position + 2] == "*":
 		var power_x_value = equation_string[x_position + 3]
 		var new_power_value = str(int(power_x_value) - 1)
-		var back: String
+		var back = equation_string.left(x_position + 3)
 		var front = equation_string.right(x_position + 4)
-		if new_power_value == "1":
-			new_power_value = ""
-			back = equation_string.left(x_position + 1)
-		else:
-			back = equation_string.left(x_position + 3)
 		equation_string = back + new_power_value + front
 	else:
 		var back = equation_string.left(x_position)
 		var front = equation_string.right(x_position + 1)
-		
-		if not back.empty() and back[-1] == "*":
-			back = back.left(back.length() - 1)
-		if not front.empty() and front[0] == "*":
-			front = front.right(1)
-		
-		equation_string = back + front
+		equation_string = back + "1" + front
 	get_node("render_token").delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	get_node("render_token").render_all(equation_string)

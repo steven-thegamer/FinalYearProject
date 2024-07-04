@@ -13,8 +13,6 @@ onready var label_price = $labels/price
 onready var label_title = $labels/title
 
 func _ready():
-	if GameLevelProgress.money < price and not bought:
-		button.disabled = true
 	label_title.text = item_name
 	label_desc.text = item_description
 	label_price.text = "Price: " + str(price)
@@ -22,6 +20,9 @@ func _ready():
 		bought = true
 	if bought:
 		label_price.queue_free()
+
+func _process(delta):
+	button.disabled = true if GameLevelProgress.money < price and not bought else false
 
 func buy_item():
 	if not bought:
