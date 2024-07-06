@@ -6,6 +6,7 @@ var reward_text := "10"
 func _ready():
 	label.text = "Reward: " + reward_text
 	GameLevelProgress.money += int(reward_text)
+	$AudioStreamPlayer2D.play()
 
 func _on_continue_pressed():
 	match GameLevelProgress.current_level:
