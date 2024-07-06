@@ -16,6 +16,8 @@ func _on_forward_pressed():
 		tutorial_slides.frame += 1
 		if back_arrow.visible == false:
 			back_arrow.show()
+		$Tutorial1/multiply_tutorial_animation.visible = true if tutorial_slides.animation == "tutorial1" and tutorial_slides.frame == 1 else false
+		$Tutorial1/subtract_tutorial_animation.visible = true if tutorial_slides.animation == "tutorial1" and tutorial_slides.frame == 1 else false
 	else:
 		queue_free()
 
@@ -23,3 +25,5 @@ func _on_backward_pressed():
 	tutorial_slides.frame -= 1
 	if tutorial_slides.frame == 0:
 		back_arrow.hide()
+	$Tutorial1/multiply_tutorial_animation.visible = true if tutorial_slides.animation == "tutorial1" and tutorial_slides.frame == 1 else false
+	$Tutorial1/subtract_tutorial_animation.visible = true if tutorial_slides.animation == "tutorial1" and tutorial_slides.frame == 1 else false

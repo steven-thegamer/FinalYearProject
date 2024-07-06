@@ -14,6 +14,7 @@ const particle_complete := preload("res://add_progress.tscn")
 const initial := preload("res://initial_add_progress.tscn")
 
 onready var level_progress_bar = $level_progress
+onready var uv = $uv_sub
 
 func _ready():
 	randomize()
@@ -42,6 +43,7 @@ func _evaluate_answer():
 			if GamePlayTimer.get_total_timer() < 600.0:
 				GameLevelProgress.chap_1_level_progress[level_dictionary_check].fast_learner = true
 			add_child(obj)
+			uv.reset_values()
 		else:
 			get_node("evaluate_button").play_correct()
 			equation_obj.generate_new_equation()

@@ -25,7 +25,7 @@ func render_all(equation : String):
 func create_character_sprite(character : String, char_position : Vector2, char_index : int):
 	yield(get_tree(), "idle_frame")
 	var obj = character_sprite_preload.instance()
-	obj.original_question_parent = owner
+	obj.original_question_parent = get_parent()
 	obj.characters = character
 	obj.position = char_position
 	obj.char_pos_in_string = char_index
@@ -183,6 +183,8 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 		elif token_string == "*":
 			char_index += 1
 		index += 1
+
+
 	var obj = addition_object.instance()
 	obj.position = Vector2(starting_position_x + gap_increment * 1.5 ,starting_position_y)
 	call_deferred("add_child",obj)

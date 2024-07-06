@@ -1,0 +1,196 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://levels/levelselection/level_button.tscn" type="PackedScene" id=1]
+[ext_resource path="res://levels/levelselection/level_selection_scene.gd" type="Script" id=2]
+[ext_resource path="res://paper_full.png" type="Texture" id=3]
+[ext_resource path="res://Levels/Decor/ddx_decor.png" type="Texture" id=4]
+[ext_resource path="res://Levels/Decor/chapter_1_decor.png" type="Texture" id=5]
+[ext_resource path="res://display_level.tscn" type="PackedScene" id=6]
+[ext_resource path="res://currency/coin_ui.tscn" type="PackedScene" id=7]
+[ext_resource path="res://npc_ai.tscn" type="PackedScene" id=8]
+[ext_resource path="res://levels/levelselection/freeplay_button.tscn" type="PackedScene" id=9]
+[ext_resource path="res://levels/levelselection/back_button1.png" type="Texture" id=10]
+[ext_resource path="res://levels/levelselection/back_button2.png" type="Texture" id=11]
+[ext_resource path="res://shop/shop.tscn" type="PackedScene" id=12]
+[ext_resource path="res://shop/shop_button1.png" type="Texture" id=13]
+[ext_resource path="res://shop/shop_button2.png" type="Texture" id=14]
+[ext_resource path="res://shop/shop_button3.png" type="Texture" id=15]
+
+[node name="level_selection_scene" type="Node2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer"]
+margin_left = 38.0
+margin_top = 31.0
+margin_right = 102.0
+margin_bottom = 95.0
+texture_normal = ExtResource( 10 )
+texture_hover = ExtResource( 11 )
+
+[node name="display_level" parent="CanvasLayer" instance=ExtResource( 6 )]
+visible = false
+
+[node name="coin_ui" parent="CanvasLayer" instance=ExtResource( 7 )]
+visible = false
+margin_left = 15.0
+margin_top = 590.0
+margin_right = 93.0
+margin_bottom = 638.0
+
+[node name="shop_button" type="TextureButton" parent="CanvasLayer"]
+visible = false
+margin_left = 889.0
+margin_top = 516.0
+margin_right = 937.0
+margin_bottom = 564.0
+rect_scale = Vector2( 2, 2 )
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 14 )
+texture_hover = ExtResource( 15 )
+
+[node name="shop" parent="CanvasLayer" instance=ExtResource( 12 )]
+visible = false
+
+[node name="npc_ai" parent="CanvasLayer" instance=ExtResource( 8 )]
+visible = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+limit_left = 0
+limit_right = 1024
+limit_bottom = 648
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Camera2D"]
+margin_top = -174.0
+margin_right = 1024.0
+margin_bottom = 911.0
+texture = ExtResource( 3 )
+patch_margin_left = 25
+patch_margin_top = 37
+patch_margin_right = 27
+patch_margin_bottom = 29
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="background_decor" type="Node2D" parent="."]
+
+[node name="Chapter1Decor" type="Sprite" parent="background_decor"]
+position = Vector2( 189, 193 )
+rotation = -0.234393
+texture = ExtResource( 5 )
+
+[node name="DdxDecor" type="Sprite" parent="background_decor"]
+position = Vector2( 732, 432 )
+rotation = -0.396044
+texture = ExtResource( 4 )
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 515, 579, 621, 327, 429, 110, 577, -122, 419, -404, 548, -604, 379, -889, 645, -1066, 505, -1272, 569, -1474 )
+
+[node name="level_button" parent="." instance=ExtResource( 1 )]
+margin_left = 464.0
+margin_top = 526.0
+margin_right = 560.0
+margin_bottom = 622.0
+level_number = 1
+level_path = "res://levels/level1/level.tscn"
+title = "Welcome!"
+level_code = "level1"
+
+[node name="level_button2" parent="." instance=ExtResource( 1 )]
+margin_left = 577.0
+margin_top = 275.0
+margin_right = 673.0
+margin_bottom = 371.0
+level_number = 2
+level_path = "res://levels/level2/level.tscn"
+level_code = "level2"
+
+[node name="level_button3" parent="." instance=ExtResource( 1 )]
+margin_left = 386.0
+margin_top = 62.0
+margin_right = 482.0
+margin_bottom = 158.0
+level_number = 3
+level_path = "res://levels/level3/level.tscn"
+level_code = "level3"
+
+[node name="level_button4" parent="." instance=ExtResource( 1 )]
+margin_left = 533.0
+margin_top = -167.0
+margin_right = 629.0
+margin_bottom = -71.0
+level_number = 4
+level_path = "res://levels/level4/level.tscn"
+level_code = "level4"
+
+[node name="level_button5" parent="." instance=ExtResource( 1 )]
+margin_left = 383.0
+margin_top = -459.0
+margin_right = 479.0
+margin_bottom = -363.0
+level_number = 5
+level_path = "res://levels/level5/level.tscn"
+level_code = "level5"
+
+[node name="level_button6" parent="." instance=ExtResource( 1 )]
+margin_left = 506.0
+margin_top = -658.0
+margin_right = 602.0
+margin_bottom = -562.0
+level_number = 6
+level_path = "res://levels/level6/level.tscn"
+level_code = "level6"
+
+[node name="level_button7" parent="." instance=ExtResource( 1 )]
+margin_left = 358.0
+margin_top = -919.0
+margin_right = 454.0
+margin_bottom = -823.0
+level_number = 7
+level_path = "res://levels/level7/level.tscn"
+level_code = "level7"
+
+[node name="level_button8" parent="." instance=ExtResource( 1 )]
+margin_left = 581.0
+margin_top = -1118.0
+margin_right = 677.0
+margin_bottom = -1022.0
+level_number = 8
+level_path = "res://levels/level8/level.tscn"
+level_code = "level8"
+
+[node name="level_button9" parent="." instance=ExtResource( 1 )]
+margin_left = 453.0
+margin_top = -1310.0
+margin_right = 549.0
+margin_bottom = -1214.0
+level_number = 9
+level_path = "res://levels/level9/level.tscn"
+level_code = "level9"
+
+[node name="level_button10" parent="." instance=ExtResource( 1 )]
+margin_left = 526.0
+margin_top = -1538.0
+margin_right = 622.0
+margin_bottom = -1442.0
+level_number = 10
+level_path = "res://levels/level10/level.tscn"
+title = "One Final Test"
+level_code = "level10"
+
+[node name="freeplay_button" parent="." instance=ExtResource( 9 )]
+margin_left = 835.0
+margin_top = -801.0
+margin_right = 931.0
+margin_bottom = -705.0
+
+[connection signal="pressed" from="CanvasLayer/TextureButton" to="." method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/shop_button" to="." method="_on_shop_button_pressed"]
+[connection signal="close_shop" from="CanvasLayer/shop" to="." method="_on_shop_close_shop"]

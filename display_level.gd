@@ -22,7 +22,6 @@ func _on_Button_pressed():
 		yield(GameLevelProgress,"transition_done")
 		get_tree().change_scene(scene_path)
 
-
 func _on_close_button_pressed():
 	scene_path = ""
 	hide()
@@ -31,3 +30,8 @@ func typewriter_description() -> void:
 	while desc.percent_visible < 1:
 		desc.visible_characters += 1
 		yield(get_tree().create_timer(1.0/typewriter_speed_per_second),"timeout")
+
+
+func _on_DescriptionText_gui_input(event):
+	if event is InputEventMouseButton and event.is_pressed() and event.button_index == 1:
+		desc.percent_visible = 1

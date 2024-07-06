@@ -8,7 +8,7 @@
 [ext_resource path="res://paper_full.png" type="Texture" id=6]
 [ext_resource path="res://pause_button.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Levels/level_progression_bar/level_progress.tscn" type="PackedScene" id=8]
-[ext_resource path="res://storage_box.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Levels/uv_sub.tscn" type="PackedScene" id=9]
 [ext_resource path="res://tutorial_slides.tscn" type="PackedScene" id=10]
 
 [node name="Level6" type="Node2D"]
@@ -61,12 +61,14 @@ margin_top = 601.0
 margin_right = 987.0
 margin_bottom = 633.0
 
-[node name="u-sub" parent="." instance=ExtResource( 9 )]
-position = Vector2( 88, 561.6 )
-equation_path = NodePath("../question")
+[node name="uv_sub" parent="." instance=ExtResource( 9 )]
+margin_left = 40.0
+margin_top = 514.0
+margin_right = 136.0
+margin_bottom = 610.0
 
 [node name="question" parent="." instance=ExtResource( 1 )]
-position = Vector2( 93, 318 )
+position = Vector2( 78, 209 )
 
 [node name="tutorial_slides" parent="." instance=ExtResource( 10 )]
 tutorial_type = "tutorial4"

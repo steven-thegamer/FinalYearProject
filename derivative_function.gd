@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var render_token = $render_token
+
 var original_equation_string := ""
 var equation_string := ""
 var all_targets := []
@@ -108,14 +110,14 @@ func generate_new_equation():
 	# Generate the derivative form
 	all_targets = EquationFixerAnswerGenerator.all_derivative_answers(equation_string)
 	# Delete all generated tokens if any
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	# Render new tokens
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 
 func revert_to_original():
 	equation_string = original_equation_string
-	get_node("render_token").delete_all_token()
-	get_node("render_token").render_all(equation_string)
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
 
 func multiply_trigonometry_equation_string(position_multiply: int, string_multiply: String):
 	equation_string = equation_string.replace(" ", "")
@@ -138,9 +140,9 @@ func multiply_trigonometry_equation_string(position_multiply: int, string_multip
 	var multiplier_trig = string_multiply + inside_trig_function
 	var front = equation_string.right(limit_front)
 	equation_string = back + multiplier_trig + "*" + full_trig_function + front
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 
 func multiply_number_equation_string(value: String, position_multiply: int, multiply_value: String):
 	equation_string = equation_string.replace(" ", "")
@@ -149,9 +151,9 @@ func multiply_number_equation_string(value: String, position_multiply: int, mult
 	var front = equation_string.right(position_multiply + size)
 	var new_value = str(int(value) * int(multiply_value))
 	equation_string = back + new_value + front
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 
 func subtract_number_equation_string(value: String, position_subtract: int):
 	equation_string = equation_string.replace(" ", "")
@@ -238,18 +240,18 @@ func subtract_number_equation_string(value: String, position_subtract: int):
 	# substract from one instead of all
 	equation_string = back + new_value + front
 	
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 
 func multiply_trigonometry_on_equation_string(trigonometry_position: int, multiply_value: String):
 	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(trigonometry_position)
 	var front = equation_string.right(trigonometry_position)
 	equation_string = back + multiply_value + "*" + front
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 
 func update_equation_string_on_trigonometry(trigonometry_position: int, power_value: String):
 	equation_string = equation_string.replace(" ", "")
@@ -271,9 +273,9 @@ func update_equation_string_on_trigonometry(trigonometry_position: int, power_va
 			trigonomety_equation += equation_string[i]
 	var front = equation_string.right(front_limit_position)
 	equation_string = back + "(" + trigonomety_equation + "**" + power_value + ")" + front
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 
 func switch_trigonometry_on_equation_string(trigonometry_position: int, trig_value: String):
 	equation_string = equation_string.replace(" ", "")
@@ -293,9 +295,9 @@ func switch_trigonometry_on_equation_string(trigonometry_position: int, trig_val
 			equation_string = back + "-cot" + front
 		"cot":
 			equation_string = back + "-csc" + front
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 
 func update_equation_string_on_x(x_position: int):
 	equation_string = equation_string.replace(" ", "")
@@ -309,9 +311,9 @@ func update_equation_string_on_x(x_position: int):
 		var back = equation_string.left(x_position)
 		var front = equation_string.right(x_position + 1)
 		equation_string = back + "1" + front
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 
 func update_equation_string_on_x_multiply(x_position: int, value: String):
 	equation_string = equation_string.replace(" ", "")
@@ -319,16 +321,16 @@ func update_equation_string_on_x_multiply(x_position: int, value: String):
 		var back = equation_string.left(x_position)
 		var front = equation_string.right(x_position + 1)
 		equation_string = back + value + "*x" + front
-		get_node("render_token").delete_all_token()
+		render_token.delete_all_token()
 		equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-		get_node("render_token").render_all(equation_string)
+		render_token.render_all(equation_string)
 	else:
 		var back = equation_string.left(x_position)
 		var front = equation_string.right(x_position + 1)
 		equation_string = back + value + "*x" + front
-		get_node("render_token").delete_all_token()
+		render_token.delete_all_token()
 		equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-		get_node("render_token").render_all(equation_string)
+		render_token.render_all(equation_string)
 
 func update_equation_string_logarithm(character: String, log_pos: int, value: String):
 	equation_string = equation_string.replace(" ", "")
@@ -338,18 +340,18 @@ func update_equation_string_logarithm(character: String, log_pos: int, value: St
 		equation_string = back + value + "*exp" + front
 	elif character == "ln":
 		equation_string = back + value + "*log" + front
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 		
 func convert_ln_to_fraction(log_pos: int):
 	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(log_pos)
 	var front = equation_string.right(log_pos + 3)
 	equation_string = back + "1/" + front
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 
 func equation_string_switch_operator(character: String, operator_pos: int, another_character: String):
 	equation_string = equation_string.replace(" ", "")
@@ -365,9 +367,9 @@ func equation_string_switch_operator(character: String, operator_pos: int, anoth
 	else:
 		new_character = another_character + character
 	equation_string = back + new_character + front
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 
 func multiply_value_with_equation(equation: String, value_pos: int, character_hovered_at: String):
 	equation_string = equation_string.replace(" ", "")
@@ -385,7 +387,7 @@ func multiply_value_with_equation(equation: String, value_pos: int, character_ho
 				parenthesis_counter -= 1
 			index -= 1
 		
-		if back[index] == "/":
+		if not back.empty() and back[index] == "/":
 			equation_string = back + "/(" + equation + ")" + front
 		else:
 			equation_string = back + "*(" + equation + ")" + front
@@ -393,13 +395,13 @@ func multiply_value_with_equation(equation: String, value_pos: int, character_ho
 		var back = equation_string.left(value_pos)
 		var front = equation_string.right(value_pos)
 		
-		if back[- 1] == "/":
+		if not back.empty() and back[-1] == "/":
 			equation_string = back + "(" + equation + ")/" + front
 		else:
 			equation_string = back + "(" + equation + ")*" + front
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
 	GrabSprite.emit_signal("equation_u_sub")
 
 func evaluate_answer():
@@ -407,13 +409,13 @@ func evaluate_answer():
 	return all_targets.has(answer)
 
 func make_all_equation_shake():
-	for child in get_node("render_token").get_children():
+	for child in render_token.get_children():
 		if child.has_method("shake_anim"):
 			child.shake_anim()
 
 func add_value_at_end(value: String):
 	equation_string = equation_string.replace(" ", "")
 	equation_string = equation_string + "+" + value
-	get_node("render_token").delete_all_token()
+	render_token.delete_all_token()
 #	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	get_node("render_token").render_all(equation_string)
+	render_token.render_all(equation_string)
