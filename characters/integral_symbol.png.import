@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/integral_symbol.png-c8b100e5b5c3bb4d33f1b61399a523f0.stex"
+path="res://.import/integral_symbol.png-fd8948f8c16a49ce304eaf25edc55341.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://integrals/integral_symbol.png"
-dest_files=[ "res://.import/integral_symbol.png-c8b100e5b5c3bb4d33f1b61399a523f0.stex" ]
+source_file="res://characters/integral_symbol.png"
+dest_files=[ "res://.import/integral_symbol.png-fd8948f8c16a49ce304eaf25edc55341.stex" ]
 
 [params]
 

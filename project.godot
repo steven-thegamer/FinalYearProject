@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
-"class": "EquationParser",
-"language": "GDScript",
-"path": "res://parsers/equation.gd"
-}, {
 "base": "Resource",
 "class": "SaveGame",
 "language": "GDScript",
@@ -40,7 +35,6 @@ _global_script_classes=[ {
 "path": "res://characters.gd"
 } ]
 _global_script_class_icons={
-"EquationParser": "",
 "SaveGame": "",
 "add_equation": "",
 "fraction": "",
