@@ -2,8 +2,6 @@ extends Node2D
 
 onready var review_tutorial := $TutorialPopUp
 
-
-
 func _on_continue_pressed():
 	queue_free()
 

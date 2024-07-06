@@ -93,29 +93,34 @@ rect_scale = Vector2( 0.8, 0.8 )
 custom_constants/separation = 16
 
 [node name="TextureRect" type="TextureRect" parent="TutorialPopUp/VBoxContainer"]
+visible = false
 margin_right = 600.0
 margin_bottom = 67.0
 texture = ExtResource( 20 )
 
 [node name="TextureRect2" type="TextureRect" parent="TutorialPopUp/VBoxContainer"]
+visible = false
 margin_top = 83.0
 margin_right = 600.0
 margin_bottom = 150.0
 texture = ExtResource( 21 )
 
 [node name="TextureRect3" type="TextureRect" parent="TutorialPopUp/VBoxContainer"]
+visible = false
 margin_top = 166.0
 margin_right = 600.0
 margin_bottom = 241.0
 texture = ExtResource( 19 )
 
 [node name="TextureRect4" type="TextureRect" parent="TutorialPopUp/VBoxContainer"]
+visible = false
 margin_top = 257.0
 margin_right = 600.0
 margin_bottom = 374.0
 texture = ExtResource( 17 )
 
 [node name="TextureRect5" type="TextureRect" parent="TutorialPopUp/VBoxContainer"]
+visible = false
 margin_top = 390.0
 margin_right = 600.0
 margin_bottom = 468.0

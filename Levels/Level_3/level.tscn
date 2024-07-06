@@ -48,7 +48,7 @@ margin_right = 940.8
 margin_bottom = 491.0
 
 [node name="question" parent="." instance=ExtResource( 1 )]
-position = Vector2( 128, 324 )
+position = Vector2( 51, 324 )
 
 [node name="pause_button" parent="." instance=ExtResource( 7 )]
 margin_left = 26.0

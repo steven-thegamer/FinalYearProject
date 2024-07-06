@@ -62,6 +62,7 @@ func talking(text : String, emotion : int):
 	var index = 0
 	while label.text != text:
 		label.text += text[index]
+		$AudioStreamPlayer2D.play()
 		yield(get_tree().create_timer(1/character_per_second),"timeout")
 		index += 1
 		if skip:

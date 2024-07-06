@@ -11,7 +11,9 @@ const possible_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, - 1, - 2, - 3, - 4, - 5, - 
 const possible_numbers_with_zero = [1, 2, 3, 4, 5, 6, 7, 8, 9, - 1, - 2, - 3, - 4, - 5, - 6, - 7, - 8, - 9, 0]
 
 func _ready():
+	randomize()
 	generate_new_equation()
+	render_token.connect("first_generate_equation",self,"_on_render_token_first_generate_equation")
 
 # This is to create the string of the equation
 func generate_equation(number=level_number):
@@ -419,3 +421,9 @@ func add_value_at_end(value: String):
 	render_token.delete_all_token()
 #	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	render_token.render_all(equation_string)
+
+func reactivate_first_time_generating():
+	render_token.first_time_generating = true
+
+func _on_render_token_first_generate_equation():
+	render_token.first_time_generating = false

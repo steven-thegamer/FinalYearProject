@@ -16,6 +16,10 @@ const character_sprite_preload := preload("res://characters.tscn")
 const fraction_object := preload("res://fraction.tscn")
 const addition_object := preload("res://addition_to_equation.tscn")
 
+var first_time_generating := true
+
+signal first_generate_equation
+
 func render_all(equation : String):
 	var equation_token = tokenize(equation)
 	var better_equation_token = parse_tokens(equation_token)
@@ -31,6 +35,8 @@ func create_character_sprite(character : String, char_position : Vector2, char_i
 	obj.char_pos_in_string = char_index
 	call_deferred("add_child",obj)
 	yield(obj,"ready")
+	if first_time_generating:
+		obj.appear_anim()
 
 func tokenize(expression : String):
 	var regex = RegEx.new()
@@ -183,7 +189,7 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 		elif token_string == "*":
 			char_index += 1
 		index += 1
-
+	emit_signal("first_generate_equation")
 
 	var obj = addition_object.instance()
 	obj.position = Vector2(starting_position_x + gap_increment * 1.5 ,starting_position_y)
