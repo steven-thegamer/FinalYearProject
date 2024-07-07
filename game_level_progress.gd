@@ -23,6 +23,7 @@ const transition_object := preload("res://transition.tscn")
 signal transition_done
 
 func _ready():
+	pass
 	if not OS.has_feature("standalone"):
 		chap_1_level_progress = {1:{"completed" : true, "unlocked" : true, "fast_learner" : true},
 					2:{"completed" : true, "unlocked" : true, "fast_learner" : true},
