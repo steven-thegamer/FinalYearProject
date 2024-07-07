@@ -4,7 +4,6 @@ enum character_type {NUMBER, OPERATOR, VARIABLE, TRIG_FUNCTION, LOG_FUNCTION, PA
 var type : int
 var character_holding : String
 
-signal equation_u_sub
 signal equation_effect(effect)
 
 func _process(delta):

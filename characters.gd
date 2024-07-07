@@ -116,8 +116,11 @@ func _on_characters_input_event(viewport, event, shape_idx):
 						if type == character_type.TRIG_FUNCTION:
 							original_question_parent.multiply_trigonometry_equation_string(char_pos_in_string,GrabSprite.character_holding)
 					GrabSprite.character_type.EQUATION:
-						if original_question_parent.get_parent().name != "u-sub":
-							original_question_parent.multiply_value_with_equation(GrabSprite.character_holding,char_pos_in_string,characters)
+						if type == character_type.NUMBER:
+							original_question_parent.equation_multiply_number(GrabSprite.character_holding,char_pos_in_string,characters)
+						elif type == character_type.VARIABLE:
+							original_question_parent.equation_multiply_variable(GrabSprite.character_holding,char_pos_in_string)
+#						original_question_parent.multiply_value_with_equation(GrabSprite.character_holding,char_pos_in_string,characters)
 		
 		# EVENTS OF RIGHT CLICKING
 		elif event.button_index == 2:

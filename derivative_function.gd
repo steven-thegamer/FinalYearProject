@@ -292,32 +292,8 @@ func subtract_number_by_one(number_subtract: String, position_subtract: int):
 	var new_value = str(int(number_subtract) - 1)
 	if new_value == "0":
 		if not back.empty():
-			var index = back.length() - 1
-			var parenthesis_counter := 0
-			while index >= 0:
-				if parenthesis_counter == 0 and (back[index] == "+" or back[index] == "-"):
-					break
-				elif back[index] == ")":
-					parenthesis_counter += 1
-				elif back[index] == "(":
-					parenthesis_counter -= 1
-				else:
-					back[index] = ""
-				index -= 1
-		if not front.empty():
-			var index = 0
-			var parenthesis_counter := 0
-			while index < front.length():
-				if parenthesis_counter == 0 and (front[index] == "+" or front[index] == "-"):
-					break
-				elif front[index] == ")":
-					parenthesis_counter -= 1
-				elif front[index] == "(":
-					parenthesis_counter += 1
-				else:
-					front[index] = ""
-				index += 1
-		back[-1] = ""
+			if back[-1] == "+" or back[-1] == '-':
+				back[-1] = ''
 		equation_string = back + front
 	elif new_value == "1":
 		if front.empty():
@@ -326,7 +302,9 @@ func subtract_number_by_one(number_subtract: String, position_subtract: int):
 			if front[0] == "*":
 				new_value = ""
 				front[0] = ""
-			equation_string = back + front
+				equation_string = back + front
+			else:
+				equation_string = back + new_value + front
 		if not back.empty() and back[-1] == "*" and back[-2] == "*":
 			back = back.left(back.length() - 2)
 			equation_string = back + front
@@ -341,7 +319,7 @@ func subtract_variable_by_one(x_position : int):
 	var back = equation_string.left(x_position)
 	var front = equation_string.right(x_position+1)
 	if front.empty():
-		if back[-1] == "*":
+		if not back.empty() and back[-1] == "*":
 			front = ""
 			back[-1] = ""
 		else:
@@ -365,7 +343,11 @@ func subtract_variable_by_one(x_position : int):
 			subtract_number_by_one(power_value,x_position + 3)
 			return
 		else:
-			back[-1] = ""
+			print(back)
+			if not back.empty() and back[-1] == "*":
+				back[-1] = ""
+			else:
+				back = back + '1'
 			equation_string = back + front
 
 	render_token.delete_all_token()
@@ -382,8 +364,28 @@ func add_value_at_end(value: String):
 	render_token.delete_all_token()
 	render_token.render_all(equation_string)
 
+func equation_multiply_number(equation : String, number_pos : int, number_dropped : String):
+	equation_string = equation_string.replace(" ", "")
+	var back = equation_string.left(number_pos)
+	var number_size = number_dropped.length()
+	var front = equation_string.right(number_pos + number_size)
+	front = '*' + equation + front
+	equation_string = back + number_dropped + front
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
 
-
+func equation_multiply_variable(equation : String, x_pos : int):
+	equation_string = equation_string.replace(" ", "")
+	var back = equation_string.left(x_pos)
+	var front = equation_string.right(x_pos + 1)
+	if not front.empty() and front[0] == '*' and front[1] == '*':
+		back = back + equation + '*x'
+		equation_string = back + front
+	else:
+		front = '*' + equation + front
+		equation_string = back + 'x' + front
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
 
 func multiply_trigonometry_equation_string(position_multiply: int, string_multiply: String):
 	equation_string = equation_string.replace(" ", "")
@@ -535,7 +537,6 @@ func multiply_value_with_equation(equation: String, value_pos: int, character_ho
 	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	render_token.render_all(equation_string)
-	GrabSprite.emit_signal("equation_u_sub")
 
 func evaluate_answer():
 	var answer = EquationFixerAnswerGenerator.sympify_equation(equation_string)

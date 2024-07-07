@@ -422,7 +422,6 @@ func multiply_value_with_equation(equation: String, value_pos: int, character_ho
 	render_token.delete_all_token()
 	u_equation_string = EquationFixerAnswerGenerator.sympify_equation(u_equation_string)
 	render_token.render_all(u_equation_string)
-	GrabSprite.emit_signal("equation_u_sub")
 
 func input_get_equation(viewport, event, shape_idx):
 	if event is InputEventMouseButton and !u_equation_string.empty() and event.button_index == 1 and event.is_pressed():
