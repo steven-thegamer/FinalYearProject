@@ -121,6 +121,270 @@ func revert_to_original():
 	render_token.delete_all_token()
 	render_token.render_all(equation_string)
 
+func number_multiply_number(number_dropped : String, position_multiply: int, number_dragged : String):
+	equation_string = equation_string.replace(" ", "")
+	var number_dropped_size = number_dropped.length()
+	var back = equation_string.left(position_multiply)
+	var front = equation_string.right(position_multiply + number_dropped_size)
+	var new_value = str(int(number_dragged) * int(number_dropped))
+	equation_string = back + new_value + front
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
+
+func number_multiply_variable(x_position: int, number_dragged: String):
+	equation_string = equation_string.replace(" ", "")
+	var back = equation_string.left(x_position)
+	var front = equation_string.right(x_position+1)
+	# THIS INDICATES THERE EXISTS A COEFFICIENT BEHIND X
+	if !back.empty() and back[-1] == "*":
+		var coefficient = ""
+		var index = x_position - 2
+		while index >= 0:
+			if back[index] == "+" or back[index] == "-":
+				break
+			else:
+				coefficient = back[index] + coefficient
+			index -= 1
+		number_multiply_number(coefficient,index + 1,number_dragged)
+	# THIS MEANS THE COEFFICIENT IS JUST 1, WHICH IS NOT DISPLAYED
+	else:
+		back += number_dragged + "*"
+		equation_string = back + "x" + front
+		render_token.delete_all_token()
+		render_token.render_all(equation_string)
+
+func number_multiply_parenthesis(parenthesis_dropped : String,position_multiply:int, number_dragged : String):
+	equation_string = equation_string.replace(" ", "")
+	var back = equation_string.left(position_multiply)
+	var front = equation_string.right(position_multiply)
+	if parenthesis_dropped == "(":
+		if not back.empty() and back[-1] == "*":
+			var coefficient = ""
+			var index = position_multiply - 2
+			while index >= 0:
+				if back[index] == "+" or back[index] == "-":
+					break
+				elif back[index] == ")":
+					break
+				else:
+					coefficient = back[index] + coefficient
+				index -= 1
+			if coefficient.find('x') != -1:
+				number_multiply_variable(index + 1,number_dragged)
+				return
+			else:
+				number_multiply_number(coefficient,index + 1,number_dragged)
+				return
+		front = number_dragged + "*" + front
+	equation_string = back + front
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
+
+func operator_multiply_number(number_pos: int, operator: String):
+	equation_string = equation_string.replace(" ", "")
+	var back = equation_string.left(number_pos)
+	var front = equation_string.right(number_pos)
+	if back.empty():
+		if operator == "-":
+			equation_string = back + operator + front
+	elif operator == "-":
+		if back[-1] == "+":
+			back[-1] = "-"
+		elif back[-1] == "-":
+			back[-1] = "+"
+			if back[0] == "+":
+				back = ""
+		elif back[-1] == '(':
+			back = back + '-'
+		equation_string = back + front
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
+
+func operator_multiply_operator(operator_dropped : String, operator_pos : int, operator_dragged : String):
+	equation_string = equation_string.replace(" ", "")
+	var back = equation_string.left(operator_pos)
+	var front = equation_string.right(operator_pos)
+	if operator_dragged == "-":
+		if operator_dragged == operator_dropped:
+			front[0] = "+" if !back.empty() else ""
+		else:
+			front[0] = "-"
+	equation_string = back + front
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
+
+func operator_multiply_variable(x_position: int, operator: String):
+	equation_string = equation_string.replace(" ", "")
+	var back = equation_string.left(x_position)
+	var front = equation_string.right(x_position)
+	if back.empty():
+		if operator == "-":
+			equation_string = back + operator + front
+	elif operator == "-":
+		var index = back.length() - 1
+		while index >= 0:
+			if back[index] == '+':
+				back[index] = '-'
+				break
+			elif back[index] == '-':
+				back[index] = '+' if index != 0 else ''
+				break
+			elif back[index] == '(':
+				back = back.substr(0,index + 1) + '-' + back.substr(index + 1)
+				break
+			index -= 1
+		equation_string = back + front
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
+
+func variable_multiply_number(number_dropped : String, position_multiply : int):
+	equation_string = equation_string.replace(" ", "")
+	var back = equation_string.left(position_multiply)
+	var number_size = number_dropped.length()
+	var front = equation_string.right(position_multiply + number_size)
+	if front.empty():
+		front = "*x"
+		equation_string = back + number_dropped + front
+		render_token.delete_all_token()
+		render_token.render_all(equation_string)
+	else:
+		if front[0] == "*" and front[1] == "x":
+			variable_multiply_variable(position_multiply + number_size + 1)
+		elif back[-1] != '*' and back[-2] != '*':
+			front = '*x' + front
+			equation_string = back + (number_dropped if number_dropped != '1' else '') + front
+			render_token.delete_all_token()
+			render_token.render_all(equation_string)
+			
+func variable_multiply_variable(x_position: int):
+	equation_string = equation_string.replace(" ", "")
+	var back = equation_string.left(x_position)
+	var front = equation_string.right(x_position + 1)
+	# CHECK IF THE X HAS POWER VALUE
+	# IF X HAS POWER VALUE
+	if not front.empty():
+		if front[0] == "*" and front[1] == "*":
+			var index = 2
+			var power_value = ""
+			while index < front.length():
+				if front[index] == "+" or front[index] == "-":
+					break
+				power_value += front[index]
+				index += 1
+			power_value = str(int(power_value) + 1)
+			front = front.right(index)
+			equation_string = back + "x**" + power_value + front
+		else:
+			front = "x**2" + front
+			equation_string = back + front
+	# X DOESN'T HAVE ANY POWER VALUE
+	else:
+		front = "x**2"
+		equation_string = back + front
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
+
+func subtract_number_by_one(number_subtract: String, position_subtract: int):
+	equation_string = equation_string.replace(" ", "")
+	var size = number_subtract.length()
+	var back = equation_string.left(position_subtract)
+	var front = equation_string.right(position_subtract + size)
+	var new_value = str(int(number_subtract) - 1)
+	if new_value == "0":
+		if not back.empty():
+			var index = back.length() - 1
+			var parenthesis_counter := 0
+			while index >= 0:
+				if parenthesis_counter == 0 and (back[index] == "+" or back[index] == "-"):
+					break
+				elif back[index] == ")":
+					parenthesis_counter += 1
+				elif back[index] == "(":
+					parenthesis_counter -= 1
+				else:
+					back[index] = ""
+				index -= 1
+		if not front.empty():
+			var index = 0
+			var parenthesis_counter := 0
+			while index < front.length():
+				if parenthesis_counter == 0 and (front[index] == "+" or front[index] == "-"):
+					break
+				elif front[index] == ")":
+					parenthesis_counter -= 1
+				elif front[index] == "(":
+					parenthesis_counter += 1
+				else:
+					front[index] = ""
+				index += 1
+		back[-1] = ""
+		equation_string = back + front
+	elif new_value == "1":
+		if front.empty():
+			equation_string = back + new_value + front
+		else:
+			if front[0] == "*":
+				new_value = ""
+				front[0] = ""
+			equation_string = back + front
+		if not back.empty() and back[-1] == "*" and back[-2] == "*":
+			back = back.left(back.length() - 2)
+			equation_string = back + front
+	else:
+		equation_string = back + new_value + front
+	
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
+
+func subtract_variable_by_one(x_position : int):
+	equation_string = equation_string.replace(" ", "")
+	var back = equation_string.left(x_position)
+	var front = equation_string.right(x_position+1)
+	if front.empty():
+		if back[-1] == "*":
+			front = ""
+			back[-1] = ""
+		else:
+			front = "1"
+		equation_string = back + front
+	else:
+		if front[0] == "*" and front[1] == "*":
+			var index = 2
+			var parenthesis_counter := 0
+			var power_value := ""
+			while index < front.length():
+				if parenthesis_counter == 0 and (front[index] == "+" or front[index] == "-"):
+					break
+				elif front[index] == ")":
+					parenthesis_counter -= 1
+				elif front[index] == "(":
+					parenthesis_counter += 1
+				else:
+					power_value += front[index]
+				index += 1
+			subtract_number_by_one(power_value,x_position + 3)
+			return
+		else:
+			back[-1] = ""
+			equation_string = back + front
+
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
+
+func add_value_at_end(value: String):
+	equation_string = equation_string.replace(" ", "")
+	if equation_string.empty():
+		equation_string = value
+	elif value[0] == "-":
+		equation_string = equation_string + value
+	else:
+		equation_string = equation_string + "+" + value
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
+
+
+
+
 func multiply_trigonometry_equation_string(position_multiply: int, string_multiply: String):
 	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(position_multiply)
@@ -142,106 +406,6 @@ func multiply_trigonometry_equation_string(position_multiply: int, string_multip
 	var multiplier_trig = string_multiply + inside_trig_function
 	var front = equation_string.right(limit_front)
 	equation_string = back + multiplier_trig + "*" + full_trig_function + front
-	render_token.delete_all_token()
-	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	render_token.render_all(equation_string)
-
-func multiply_number_equation_string(value: String, position_multiply: int, multiply_value: String):
-	equation_string = equation_string.replace(" ", "")
-	var size = value.length()
-	var back = equation_string.left(position_multiply)
-	var front = equation_string.right(position_multiply + size)
-	var new_value = str(int(value) * int(multiply_value))
-	equation_string = back + new_value + front
-	render_token.delete_all_token()
-	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	render_token.render_all(equation_string)
-
-func subtract_number_equation_string(value: String, position_subtract: int):
-	equation_string = equation_string.replace(" ", "")
-	var size = value.length()
-	# NOTE: for fk sake front is the left la not right
-	var back = equation_string.left(position_subtract)
-	var front = equation_string.right(position_subtract + size)
-	var new_value = str(int(value) - 1)
-	# Please check all comments with "EDGE CASE" and "NOTE"
-	# EDGE CASE:
-	# 1. 2x**3, since the "back" is [], accessing
-	# back[-1] and back[-2] will result an error
-	# 2. You can multiply - with -, hence -2x**2 (drag the minus
-	# to itself) will create --2x**2 (same with x too apparently)
-	# 3. in -2x**2, if you drag the minus to the power it will become
-	# -2x-2 instead of -2x**(-2)
-	#  4. If you have -3x**3, dragging the 3 to x will result in -33x**3
-	# instead of -9x**3, but this could be a feature i suppose
-	# 
-	if new_value == "1":
-		if not front.empty() and front[0] == "*":
-			if front[1] == "*":
-				# 1**x
-				pass
-			else:
-				# 1*x
-				new_value = ""
-				front = front.right(1)
-		if not back.empty() and back[- 1] == "*":
-			if back[- 2] == "*":
-				# **1
-				new_value = ""
-				back = back.left(back.length() - 2)
-			else:
-				# *1
-				new_value = ""
-				back = back.left(back.length() - 1)
-				
-	elif new_value == "0":
-		if not front.empty() and front[0] == "*":
-			if front[1] == "*":
-				# 0**x
-				pass
-			elif front[1] == "x":
-				# 0*x
-				# NOTE: 0*x = 0, should not simplify to x
-				# SEARCH FRONT UNTIL THERE EXISTS AN OPERATOR (+ OR -) OR A PARENTHESIS ()
-				var index = 1
-				while index < front.length():
-					if front[index] == "+" or front[index] == "-" or front[index] == ")" or front[index] == "(":
-						break
-					index += 1
-				front = front.right(index)
-			else:
-				# 0+
-				# 0-
-				new_value = ""
-				front = front.right(1)
-		if not back.empty() and back[- 1] == "*":
-			if back[- 2] == "*":
-				# **0
-				new_value = ""
-				back = back.left(back.length() - 2)
-			else:
-				# *0
-				new_value = ""
-				back = back.left(back.length() - 1)
-		elif not back.empty() and (back[- 1] == "+" or back[- 1] == "-"):
-			# +0 or -0
-			new_value = ""
-			back = back.left(back.length() - 1)
-		elif not back.empty() and back[- 1] == "(":
-			# (0
-			new_value = ""
-			
-	# NOTE: William attempted hotfix
-	# From my playtesting, in cases such as x**3, the position to substract is
-	# no longer accurate unfortunately. If the user right click on the x instead
-	# of 3, the position becomes 0 instead of the last element, hence the check
-	# is basically invalid
-	
-	# NOTE: this technique is not good for handling double digit
-	# Example, 33x**3, clicking on 33 will not handle it properly and just
-	# substract from one instead of all
-	equation_string = back + new_value + front
-	
 	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	render_token.render_all(equation_string)
@@ -300,39 +464,6 @@ func switch_trigonometry_on_equation_string(trigonometry_position: int, trig_val
 	render_token.delete_all_token()
 	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
 	render_token.render_all(equation_string)
-
-func update_equation_string_on_x(x_position: int):
-	equation_string = equation_string.replace(" ", "")
-	if x_position + 1 < equation_string.length() and equation_string[x_position + 1] == "*" and equation_string[x_position + 2] == "*":
-		var power_x_value = equation_string[x_position + 3]
-		var new_power_value = str(int(power_x_value) - 1)
-		var back = equation_string.left(x_position + 3)
-		var front = equation_string.right(x_position + 4)
-		equation_string = back + new_power_value + front
-	else:
-		var back = equation_string.left(x_position)
-		var front = equation_string.right(x_position + 1)
-		equation_string = back + "1" + front
-	render_token.delete_all_token()
-	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	render_token.render_all(equation_string)
-
-func update_equation_string_on_x_multiply(x_position: int, value: String):
-	equation_string = equation_string.replace(" ", "")
-	if x_position > 0 and equation_string[x_position - 1] == "*":
-		var back = equation_string.left(x_position)
-		var front = equation_string.right(x_position + 1)
-		equation_string = back + value + "*x" + front
-		render_token.delete_all_token()
-		equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-		render_token.render_all(equation_string)
-	else:
-		var back = equation_string.left(x_position)
-		var front = equation_string.right(x_position + 1)
-		equation_string = back + value + "*x" + front
-		render_token.delete_all_token()
-		equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-		render_token.render_all(equation_string)
 
 func update_equation_string_logarithm(character: String, log_pos: int, value: String):
 	equation_string = equation_string.replace(" ", "")
@@ -414,13 +545,6 @@ func make_all_equation_shake():
 	for child in render_token.get_children():
 		if child.has_method("shake_anim"):
 			child.shake_anim()
-
-func add_value_at_end(value: String):
-	equation_string = equation_string.replace(" ", "")
-	equation_string = equation_string + "+" + value
-	render_token.delete_all_token()
-#	equation_string = EquationFixerAnswerGenerator.sympify_equation(equation_string)
-	render_token.render_all(equation_string)
 
 func reactivate_first_time_generating():
 	render_token.first_time_generating = true

@@ -92,18 +92,26 @@ func _on_characters_input_event(viewport, event, shape_idx):
 							character_type.LOG_FUNCTION:
 								original_question_parent.update_equation_string_logarithm(characters, char_pos_in_string,GrabSprite.character_holding)
 							character_type.NUMBER:
-								original_question_parent.multiply_number_equation_string(characters,char_pos_in_string,GrabSprite.character_holding)
-							character_type.OPERATOR:
-								pass
+								original_question_parent.number_multiply_number(characters,char_pos_in_string,GrabSprite.character_holding)
 							character_type.TRIG_FUNCTION:
 								original_question_parent.multiply_trigonometry_on_equation_string(char_pos_in_string,GrabSprite.character_holding)
 							character_type.VARIABLE:
-								original_question_parent.update_equation_string_on_x_multiply(char_pos_in_string,GrabSprite.character_holding)
+								original_question_parent.number_multiply_variable(char_pos_in_string,GrabSprite.character_holding)
+							character_type.PARENTHESIS:
+								original_question_parent.number_multiply_parenthesis(characters,char_pos_in_string,GrabSprite.character_holding)
 					GrabSprite.character_type.OPERATOR:
-						if type != character_type.VARIABLE:
-							original_question_parent.equation_string_switch_operator(characters,char_pos_in_string,GrabSprite.character_holding)
+						if type == character_type.NUMBER:
+							original_question_parent.operator_multiply_number(char_pos_in_string,GrabSprite.character_holding)
+						elif type == character_type.OPERATOR:
+							original_question_parent.operator_multiply_operator(characters,char_pos_in_string,GrabSprite.character_holding)
+						elif type == character_type.VARIABLE:
+							original_question_parent.operator_multiply_variable(char_pos_in_string,GrabSprite.character_holding)
 					GrabSprite.character_type.VARIABLE:
-						original_question_parent.multiply_trigonometry_on_equation_string(char_pos_in_string,GrabSprite.character_holding)
+						if type == character_type.VARIABLE:
+							original_question_parent.variable_multiply_variable(char_pos_in_string)
+						elif type == character_type.NUMBER:
+							original_question_parent.variable_multiply_number(characters,char_pos_in_string)
+#						original_question_parent.multiply_trigonometry_on_equation_string(char_pos_in_string,GrabSprite.character_holding)
 					GrabSprite.character_type.TRIG_FUNCTION:
 						if type == character_type.TRIG_FUNCTION:
 							original_question_parent.multiply_trigonometry_equation_string(char_pos_in_string,GrabSprite.character_holding)
@@ -117,7 +125,7 @@ func _on_characters_input_event(viewport, event, shape_idx):
 				match type:
 					character_type.VARIABLE:
 						# SUBTRACT X POWER BY ONE
-						original_question_parent.update_equation_string_on_x(char_pos_in_string)
+						original_question_parent.subtract_variable_by_one(char_pos_in_string)
 					character_type.LOG_FUNCTION:
 						if characters == "ln":
 							# CONVERT FROM LN TO FRACTION
@@ -127,7 +135,7 @@ func _on_characters_input_event(viewport, event, shape_idx):
 						original_question_parent.switch_trigonometry_on_equation_string(char_pos_in_string,characters)
 					character_type.NUMBER:
 						# SUBTRACT NUMBER BY ONE
-						original_question_parent.subtract_number_equation_string(characters,char_pos_in_string)
+						original_question_parent.subtract_number_by_one(characters,char_pos_in_string)
 
 func shake_anim():
 	anim.play("shake")

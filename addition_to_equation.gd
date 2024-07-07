@@ -16,4 +16,5 @@ func _on_addition_mouse_exited():
 func _on_addition_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == 1 and !event.is_pressed() and GrabSprite.is_holding_character():
-			emit_signal("add_to_equation",GrabSprite.character_holding)
+			if GrabSprite.type == GrabSprite.character_type.NUMBER or GrabSprite.type == GrabSprite.character_type.VARIABLE or GrabSprite.type == GrabSprite.character_type.EQUATION:
+				emit_signal("add_to_equation",GrabSprite.character_holding)

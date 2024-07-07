@@ -13,6 +13,7 @@
 script = ExtResource( 4 )
 num_of_questions = 8
 rewards_not_completed = 15
+rewards_completed = 3
 level_dictionary_check = 3
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]

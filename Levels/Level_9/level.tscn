@@ -12,7 +12,7 @@
 
 [node name="Level9" type="Node2D"]
 script = ExtResource( 4 )
-num_of_questions = 12
+num_of_questions = 8
 rewards_not_completed = 15
 rewards_completed = 3
 level_dictionary_check = 9

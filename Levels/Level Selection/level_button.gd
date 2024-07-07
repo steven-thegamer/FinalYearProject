@@ -10,7 +10,8 @@ export (String) var desc := ""
 export (String) var level_code
 onready var label = $Label
 onready var star_sprite = $Sprite
-onready var particles = $Sprite/CPUParticles2D
+onready var particles1 = $Sprite/CPUParticles2D
+onready var particles2 = $Sprite/CPUParticles2D2
 signal display_title_and_desc(title,desc,path,level_code)
 
 func _ready():
@@ -28,4 +29,5 @@ func _on_level_button_pressed():
 
 func show_star():
 	star_sprite.visible = true
-	particles.emitting = true
+	particles1.emitting = true
+	particles2.emitting = true
