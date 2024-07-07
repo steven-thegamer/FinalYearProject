@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Tutorial1.png" type="Texture" id=1]
 [ext_resource path="res://tutorial_pop_up.png" type="Texture" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://Tutorial7.png" type="Texture" id=10]
 [ext_resource path="res://multiply_tutorial_animation.tscn" type="PackedScene" id=11]
 [ext_resource path="res://subtract_tutorial_animation.tscn" type="PackedScene" id=12]
+[ext_resource path="res://u_sub_tutorial_animation.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Tutorial8.png" type="Texture" id=14]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -25,7 +27,7 @@ animations = [ {
 "name": "tutorial2",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 14 ) ],
 "loop": true,
 "name": "tutorial3",
 "speed": 5.0
@@ -61,20 +63,26 @@ texture = ExtResource( 2 )
 [node name="Tutorial1" type="AnimatedSprite" parent="."]
 position = Vector2( 512, 306 )
 frames = SubResource( 1 )
-animation = "tutorial1"
+animation = "tutorial3"
+frame = 1
 
 [node name="multiply_tutorial_animation" parent="Tutorial1" instance=ExtResource( 11 )]
 visible = false
 position = Vector2( -164.982, -41.4575 )
 scale = Vector2( 0.734042, 0.734042 )
-frame = 165
+frame = 31
 
 [node name="subtract_tutorial_animation" parent="Tutorial1" instance=ExtResource( 12 )]
 visible = false
 position = Vector2( -165, 117 )
 scale = Vector2( 0.6, 0.6 )
-frame = 145
+frame = 103
 playing = true
+
+[node name="u_sub_tutorial_animation" parent="Tutorial1" instance=ExtResource( 13 )]
+visible = false
+position = Vector2( 4, 22 )
+frame = 200
 
 [node name="forward" type="TextureButton" parent="."]
 margin_left = 802.0

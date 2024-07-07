@@ -22,6 +22,19 @@ var paper_background : Color = Color.white
 const transition_object := preload("res://transition.tscn")
 signal transition_done
 
+func _ready():
+	if not OS.has_feature("standalone"):
+		chap_1_level_progress = {1:{"completed" : true, "unlocked" : true, "fast_learner" : true},
+					2:{"completed" : true, "unlocked" : true, "fast_learner" : true},
+					3:{"completed" : true, "unlocked" : true, "fast_learner" : true},
+					4:{"completed" : true, "unlocked" : true, "fast_learner" : true},
+					5:{"completed" : true, "unlocked" : true, "fast_learner" : true},
+					6:{"completed" : true, "unlocked" : true, "fast_learner" : true},
+					7:{"completed" : true, "unlocked" : true, "fast_learner" : true},
+					8:{"completed" : true, "unlocked" : true, "fast_learner" : true},
+					9:{"completed" : true, "unlocked" : true, "fast_learner" : true},
+					10:{"completed" : true, "unlocked" : true, "fast_learner" : true},}
+
 func transition_enter():
 	var obj = transition_object.instance()
 	obj.transition_type = 1
