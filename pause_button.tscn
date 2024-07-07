@@ -6,10 +6,10 @@
 [ext_resource path="res://pause_button.gd" type="Script" id=4]
 
 [node name="pause_button" type="TextureButton"]
-anchor_right = 0.078
-anchor_bottom = 0.123
-margin_right = 0.127998
-margin_bottom = 0.295998
+anchor_right = 0.047
+anchor_bottom = 0.074
+margin_right = -0.128002
+margin_bottom = 0.0480003
 texture_normal = ExtResource( 2 )
 texture_pressed = ExtResource( 3 )
 texture_hover = ExtResource( 1 )
