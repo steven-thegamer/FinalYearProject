@@ -178,7 +178,7 @@ margin_bottom = -1022.0
 level_number = 8
 level_path = "res://Levels/Level_8/level.tscn"
 title = "Chain Rule"
-desc = "The chain rule tells us how to find the derivative of a composite function. Too hard to understand? Let's say a function is multiplied by itself, for example, [b]10[/b] times. Using the usual product rule is going to be [i]tiring[/i]. This rule will help [rainbow]solve[/rainbow] that kind of problem."
+desc = "The chain rule tells us how to find the derivative of a composite function. Too hard to understand? Let's say a function is multiplied by itself, for example, [b]10[/b] times. Using the usual product rule is going to be [shake]tiring[/shake]. This rule will help [rainbow]solve[/rainbow] that kind of problem."
 level_code = "level8"
 
 [node name="level_button9" parent="." instance=ExtResource( 1 )]

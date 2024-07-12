@@ -207,7 +207,7 @@ func delete_all_token():
 func shrink_scale() -> void:
 	var amount_of_characters = get_child_count()
 	if amount_of_characters > 15:
-		var value = pow(0.95,amount_of_characters - 15)
+		var value = pow(0.985,amount_of_characters - 16)
 		scale = Vector2(value,value)
 	else:
 		scale = Vector2(1,1)

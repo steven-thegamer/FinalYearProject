@@ -69,19 +69,19 @@ animation = "tutorial1"
 visible = false
 position = Vector2( -164.982, -41.4575 )
 scale = Vector2( 0.734042, 0.734042 )
-frame = 40
+frame = 64
 
 [node name="subtract_tutorial_animation" parent="Tutorial1" instance=ExtResource( 12 )]
 visible = false
 position = Vector2( -165, 117 )
 scale = Vector2( 0.6, 0.6 )
-frame = 92
+frame = 15
 playing = true
 
 [node name="u_sub_tutorial_animation" parent="Tutorial1" instance=ExtResource( 13 )]
 visible = false
 position = Vector2( 4, 22 )
-frame = 36
+frame = 78
 
 [node name="forward" type="TextureButton" parent="."]
 margin_left = 802.0

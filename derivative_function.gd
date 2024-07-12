@@ -206,7 +206,7 @@ func operator_multiply_operator(operator_dropped : String, operator_pos : int, o
 	var front = equation_string.right(operator_pos)
 	if operator_dragged == "-":
 		if operator_dragged == operator_dropped:
-			front[0] = "+" if !back.empty() else ""
+			front[0] = "+" if !back.empty() and back[-1] != '(' else ""
 		else:
 			front[0] = "-"
 	equation_string = back + front
@@ -294,20 +294,36 @@ func subtract_number_by_one(number_subtract: String, position_subtract: int):
 		if not back.empty():
 			if back[-1] == "+" or back[-1] == '-':
 				back[-1] = ''
+			elif back[-1] == '(':
+				pass
+			else:
+				back += new_value
+		# 0 +
+		else:
+			if front[0] == '+':
+				front[0] = ''
 		equation_string = back + front
 	elif new_value == "1":
-		if front.empty():
-			equation_string = back + new_value + front
+		# 0 : power
+		# 1 : constant
+		# 2 : coeff
+		var value_type := 0
+		if back.length() > 2 and back[-1] == "*" and back[-2] == "*":
+			value_type = 0
+		elif front.length() > 1 and front[0] == "*":
+			value_type = 2
 		else:
-			if front[0] == "*":
-				new_value = ""
-				front[0] = ""
+			value_type = 1
+		
+		match value_type:
+			0:
+				back = back.left(back.length() - 2)
 				equation_string = back + front
-			else:
+			1:
 				equation_string = back + new_value + front
-		if not back.empty() and back[-1] == "*" and back[-2] == "*":
-			back = back.left(back.length() - 2)
-			equation_string = back + front
+			2:
+				front[0] = ''
+				equation_string = back + front
 	else:
 		equation_string = back + new_value + front
 	
@@ -386,6 +402,9 @@ func equation_multiply_variable(equation : String, x_pos : int):
 		equation_string = back + 'x' + front
 	render_token.delete_all_token()
 	render_token.render_all(equation_string)
+
+func equation_multiply_parenthesis(equation:String, parenthesis_pos : int, parenthesis_type : String):
+	pass
 
 func multiply_trigonometry_equation_string(position_multiply: int, string_multiply: String):
 	equation_string = equation_string.replace(" ", "")

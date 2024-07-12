@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/multiply_sub3.png-e46410796d416998d776dd541ca93586.stex"
+path="res://.import/set_to_0.png-a99b3e07c2c1aa87c5b328e152d856a1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://multiply_sub3.png"
-dest_files=[ "res://.import/multiply_sub3.png-e46410796d416998d776dd541ca93586.stex" ]
+source_file="res://Levels/set_to_0.png"
+dest_files=[ "res://.import/set_to_0.png-a99b3e07c2c1aa87c5b328e152d856a1.stex" ]
 
 [params]
 
