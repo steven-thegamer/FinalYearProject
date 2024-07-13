@@ -193,7 +193,11 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 	
 	
 	var obj = addition_object.instance()
-	obj.position = Vector2(starting_position_x + gap_increment * 1.5 ,starting_position_y)
+	
+	if ("equation_string" in get_parent() and get_parent().equation_string.length() > 0) or ("u_equation_string" in get_parent() and get_parent().u_equation_string.length() > 0):
+		obj.position = Vector2(starting_position_x + gap_increment * 1.5 ,starting_position_y)
+	else:
+		obj.position = Vector2(starting_position_x ,starting_position_y)
 	call_deferred("add_child",obj)
 	obj.connect("add_to_equation",get_parent(),"add_value_at_end")
 

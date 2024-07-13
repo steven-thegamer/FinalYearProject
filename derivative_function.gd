@@ -157,6 +157,14 @@ func number_multiply_parenthesis(parenthesis_dropped : String,position_multiply:
 	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(position_multiply)
 	var front = equation_string.right(position_multiply)
+	
+	if parenthesis_dropped == "(":
+		equation_multiply_parenthesis('(' + number_dragged + ')',position_multiply,parenthesis_dropped)
+		return
+	elif parenthesis_dropped == ")":
+		equation_multiply_parenthesis('(' + number_dragged + ')',position_multiply,parenthesis_dropped)
+		return
+	
 	if parenthesis_dropped == "(":
 		if not back.empty() and back[-1] == "*":
 			var coefficient = ""
