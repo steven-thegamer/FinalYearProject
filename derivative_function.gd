@@ -334,40 +334,43 @@ func subtract_variable_by_one(x_position : int):
 	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(x_position)
 	var front = equation_string.right(x_position+1)
-	if front.empty():
-		if not back.empty() and back[-1] == "*":
-			front = ""
-			back[-1] = ""
-		else:
-			front = "1"
-		equation_string = back + front
-	else:
-		if front[0] == "*" and front[1] == "*":
-			var index = 2
-			var parenthesis_counter := 0
-			var power_value := ""
-			while index < front.length():
-				if parenthesis_counter == 0 and (front[index] == "+" or front[index] == "-"):
-					break
-				elif front[index] == ")":
-					parenthesis_counter -= 1
-				elif front[index] == "(":
-					parenthesis_counter += 1
-				else:
-					power_value += front[index]
-				index += 1
-			subtract_number_by_one(power_value,x_position + 3)
-			return
-		else:
-			print(back)
-			if not back.empty() and back[-1] == "*":
-				back[-1] = ""
+	
+	var has_power_value := false
+	var has_coefficient := false
+	
+	if front.length() > 2 and front[0] == "*" and front[1] == "*":
+		has_power_value = true
+	if back.length() > 1 and back[-1] == "*":
+		has_coefficient = true
+	
+	# If x**n where n != 1
+	if has_power_value:
+		var index = 2
+		var parenthesis_counter := 0
+		var power_value := ""
+		while index < front.length():
+			if parenthesis_counter == 0 and (front[index] == "+" or front[index] == "-"):
+				break
+			elif front[index] == ")":
+				parenthesis_counter -= 1
+			elif front[index] == "(":
+				parenthesis_counter += 1
 			else:
-				back = back + '1'
+				power_value += front[index]
+			index += 1
+		subtract_number_by_one(power_value,x_position + 3)
+		return
+	# If x**1
+	else:
+		# If a*x where x is any number
+		if has_coefficient:
+			back[-1] = ''
 			equation_string = back + front
-
-	render_token.delete_all_token()
-	render_token.render_all(equation_string)
+		# if x
+		else:
+			equation_string = back + '1' + front
+		render_token.delete_all_token()
+		render_token.render_all(equation_string)
 
 func add_value_at_end(value: String):
 	equation_string = equation_string.replace(" ", "")
