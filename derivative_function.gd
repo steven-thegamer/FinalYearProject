@@ -135,6 +135,7 @@ func number_multiply_variable(x_position: int, number_dragged: String):
 	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(x_position)
 	var front = equation_string.right(x_position+1)
+	
 	# THIS INDICATES THERE EXISTS A COEFFICIENT BEHIND X
 	if !back.empty() and back[-1] == "*":
 		var coefficient = ""
@@ -250,20 +251,26 @@ func variable_multiply_number(number_dropped : String, position_multiply : int):
 	var back = equation_string.left(position_multiply)
 	var number_size = number_dropped.length()
 	var front = equation_string.right(position_multiply + number_size)
-	if front.empty():
-		front = "*x"
+	
+	var number_as_coefficient := false
+	var number_as_power := false
+	
+	if back.length() > 2 and back[-1] == '*' and back[-2] == '*':
+		number_as_power = true
+	elif front.length() > 1 and front[0] == '*':
+		number_as_coefficient = true
+	
+	if number_as_power:
+		return
+	elif number_as_coefficient:
+		variable_multiply_variable(position_multiply + number_size + 1)
+		return
+	else:
+		front = '*x' + front
 		equation_string = back + number_dropped + front
 		render_token.delete_all_token()
 		render_token.render_all(equation_string)
-	else:
-		if front[0] == "*" and front[1] == "x":
-			variable_multiply_variable(position_multiply + number_size + 1)
-		elif back[-1] != '*' and back[-2] != '*':
-			front = '*x' + front
-			equation_string = back + (number_dropped if number_dropped != '1' else '') + front
-			render_token.delete_all_token()
-			render_token.render_all(equation_string)
-			
+
 func variable_multiply_variable(x_position: int):
 	equation_string = equation_string.replace(" ", "")
 	var back = equation_string.left(x_position)
