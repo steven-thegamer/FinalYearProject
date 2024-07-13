@@ -120,6 +120,8 @@ func _on_characters_input_event(viewport, event, shape_idx):
 							original_question_parent.equation_multiply_number(GrabSprite.character_holding,char_pos_in_string,characters)
 						elif type == character_type.VARIABLE:
 							original_question_parent.equation_multiply_variable(GrabSprite.character_holding,char_pos_in_string)
+						elif type == character_type.PARENTHESIS:
+							original_question_parent.equation_multiply_parenthesis(GrabSprite.character_holding,char_pos_in_string,characters)
 #						original_question_parent.multiply_value_with_equation(GrabSprite.character_holding,char_pos_in_string,characters)
 		
 		# EVENTS OF RIGHT CLICKING

@@ -407,7 +407,17 @@ func equation_multiply_variable(equation : String, x_pos : int):
 	render_token.render_all(equation_string)
 
 func equation_multiply_parenthesis(equation:String, parenthesis_pos : int, parenthesis_type : String):
-	pass
+	equation_string = equation_string.replace(" ", "")
+	if parenthesis_type == '(':
+		var back = equation_string.left(parenthesis_pos)
+		var front = equation_string.right(parenthesis_pos)
+		equation_string = back + equation + '*' + front
+	elif parenthesis_type == ')':
+		var back = equation_string.left(parenthesis_pos + 1)
+		var front = equation_string.right(parenthesis_pos + 1)
+		equation_string = back + '*' + equation + front
+	render_token.delete_all_token()
+	render_token.render_all(equation_string)
 
 func multiply_trigonometry_equation_string(position_multiply: int, string_multiply: String):
 	equation_string = equation_string.replace(" ", "")
