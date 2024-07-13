@@ -190,7 +190,8 @@ func render_tokens(tokens : Array, render_position_x : int, render_position_y : 
 			char_index += 1
 		index += 1
 	emit_signal("first_generate_equation")
-
+	
+	
 	var obj = addition_object.instance()
 	obj.position = Vector2(starting_position_x + gap_increment * 1.5 ,starting_position_y)
 	call_deferred("add_child",obj)
