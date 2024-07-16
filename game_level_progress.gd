@@ -24,6 +24,9 @@ signal transition_done
 
 func _ready():
 	pass
+	full_access_level()
+
+func full_access_level():
 	if not OS.has_feature("standalone"):
 		chap_1_level_progress = {1:{"completed" : true, "unlocked" : true, "fast_learner" : true},
 					2:{"completed" : true, "unlocked" : true, "fast_learner" : true},
